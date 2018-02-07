@@ -1,3 +1,6 @@
+//https://robots.thoughtbot.com/pong-clone-in-javascript - TUTORIAL ON THE CODE
+
+
 var animate = window.requestAnimationFrame ||
   window.webkitRequestAnimationFrame ||
   window.mozRequestAnimationFrame ||
