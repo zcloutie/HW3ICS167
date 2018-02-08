@@ -1,0 +1,34 @@
+﻿  websocket.cpp
+e:\users\harris\documents\github\hw3ics167\scratch work\server\pongserver\pongserver\websocket.cpp(90): warning C4477: 'printf' : format string '%s' requires an argument of type 'char *', but variadic argument 1 has type 'LPVOID'
+e:\users\harris\documents\github\hw3ics167\scratch work\server\pongserver\pongserver\websocket.cpp(116): warning C4018: '<': signed/unsigned mismatch
+e:\users\harris\documents\github\hw3ics167\scratch work\server\pongserver\pongserver\websocket.cpp(133): warning C4018: '<': signed/unsigned mismatch
+e:\users\harris\documents\github\hw3ics167\scratch work\server\pongserver\pongserver\websocket.cpp(155): warning C4018: '>=': signed/unsigned mismatch
+e:\users\harris\documents\github\hw3ics167\scratch work\server\pongserver\pongserver\websocket.cpp(168): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+e:\users\harris\documents\github\hw3ics167\scratch work\server\pongserver\pongserver\websocket.cpp(192): warning C4267: '=': conversion from 'size_t' to 'char', possible loss of data
+e:\users\harris\documents\github\hw3ics167\scratch work\server\pongserver\pongserver\websocket.cpp(201): warning C4267: '=': conversion from 'size_t' to 'char', possible loss of data
+e:\users\harris\documents\github\hw3ics167\scratch work\server\pongserver\pongserver\websocket.cpp(202): warning C4267: '=': conversion from 'size_t' to 'char', possible loss of data
+e:\users\harris\documents\github\hw3ics167\scratch work\server\pongserver\pongserver\websocket.cpp(216): warning C4267: '=': conversion from 'size_t' to 'char', possible loss of data
+e:\users\harris\documents\github\hw3ics167\scratch work\server\pongserver\pongserver\websocket.cpp(217): warning C4267: '=': conversion from 'size_t' to 'char', possible loss of data
+e:\users\harris\documents\github\hw3ics167\scratch work\server\pongserver\pongserver\websocket.cpp(218): warning C4267: '=': conversion from 'size_t' to 'char', possible loss of data
+e:\users\harris\documents\github\hw3ics167\scratch work\server\pongserver\pongserver\websocket.cpp(410): warning C4018: '<': signed/unsigned mismatch
+e:\users\harris\documents\github\hw3ics167\scratch work\server\pongserver\pongserver\websocket.cpp(609): warning C4018: '>=': signed/unsigned mismatch
+e:\users\harris\documents\github\hw3ics167\scratch work\server\pongserver\pongserver\websocket.cpp(636): warning C4018: '<': signed/unsigned mismatch
+e:\users\harris\documents\github\hw3ics167\scratch work\server\pongserver\pongserver\websocket.cpp(650): warning C4018: '>=': signed/unsigned mismatch
+e:\users\harris\documents\github\hw3ics167\scratch work\server\pongserver\pongserver\websocket.cpp(732): warning C4473: 'printf' : not enough arguments passed for format string
+  e:\users\harris\documents\github\hw3ics167\scratch work\server\pongserver\pongserver\websocket.cpp(732): note: placeholders and their parameters expect 2 variadic arguments, but 1 were provided
+  e:\users\harris\documents\github\hw3ics167\scratch work\server\pongserver\pongserver\websocket.cpp(732): note: the missing variadic argument 2 is required by format string '%d'
+e:\users\harris\documents\github\hw3ics167\scratch work\server\pongserver\pongserver\websocket.cpp(763): warning C4018: '<': signed/unsigned mismatch
+  sha1.cpp
+e:\users\harris\documents\github\hw3ics167\scratch work\server\pongserver\pongserver\sha1.cpp(226): warning C4267: '+=': conversion from 'size_t' to 'unsigned char', possible loss of data
+e:\users\harris\documents\github\hw3ics167\scratch work\server\pongserver\pongserver\sha1.cpp(233): warning C4267: '+=': conversion from 'size_t' to 'unsigned char', possible loss of data
+e:\users\harris\documents\github\hw3ics167\scratch work\server\pongserver\pongserver\sha1.cpp(264): warning C4267: '+=': conversion from 'size_t' to 'unsigned char', possible loss of data
+  main.cpp
+e:\users\harris\documents\github\hw3ics167\scratch work\server\pongserver\pongserver\main.cpp(18): warning C4018: '<': signed/unsigned mismatch
+e:\users\harris\documents\github\hw3ics167\scratch work\server\pongserver\pongserver\main.cpp(31): warning C4018: '<': signed/unsigned mismatch
+e:\users\harris\documents\github\hw3ics167\scratch work\server\pongserver\pongserver\main.cpp(43): warning C4018: '<': signed/unsigned mismatch
+e:\users\harris\documents\github\hw3ics167\scratch work\server\pongserver\pongserver\main.cpp(63): warning C4018: '<': signed/unsigned mismatch
+  base64.cpp
+e:\users\harris\documents\github\hw3ics167\scratch work\server\pongserver\pongserver\base64.cpp(96): warning C4267: '=': conversion from 'size_t' to 'unsigned char', possible loss of data
+e:\users\harris\documents\github\hw3ics167\scratch work\server\pongserver\pongserver\base64.cpp(113): warning C4267: '=': conversion from 'size_t' to 'unsigned char', possible loss of data
+  Generating Code...
+  PongServer.vcxproj -> E:\Users\Harris\Documents\GitHub\HW3ICS167\Scratch Work\Server\PongServer\Debug\PongServer.exe
