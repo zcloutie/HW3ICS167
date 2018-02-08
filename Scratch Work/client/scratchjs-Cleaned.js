@@ -175,7 +175,7 @@ Computer.prototype.update = function(ball) {
   this.paddle.move(diff, 0);
   if(this.paddle.x < 0) {
     this.paddle.x = 0;
-  } else if (this.paddle.x + this.paddle.width > 400) {
-    this.paddle.x = 400 - this.paddle.width;
+  } else if (this.paddle.x + this.paddle.width > width) {
+    this.paddle.x = width - this.paddle.width;
   }
 };
