@@ -66,6 +66,7 @@ public:
     }
 
     int socket;                            // client socket
+	string CID;                            // Client ID
     string MessageBuffer;                  // a blank string when there's no incoming frames
     int ReadyState;                        // between 0 and 3
     time_t LastRecvTime;                   // set to time() when the client is added
@@ -98,6 +99,7 @@ public:
     void wsClose(int clientID);
     vector<int> getClientIDs();
     string getClientIP(int clientID);
+	void wsgetClientIDs(int clientID, string name);
 private:
     vector<wsClient *> wsClients;
     map<int, int> socketIDmap;

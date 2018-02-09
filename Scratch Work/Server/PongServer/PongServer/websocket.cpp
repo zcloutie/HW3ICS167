@@ -128,6 +128,11 @@ string webSocket::getClientIP(int clientID){
 	return string(inet_ntop(AF_INET, &(wsClients[clientID]->addr), clientIP_str, INET_ADDRSTRLEN));
 }
 
+void webSocket::wsgetClientIDs(int clientID, string name)
+{
+	wsClients[clientID]->CID = name;
+}
+
 void webSocket::wsCheckIdleClients(){
     time_t current = time(NULL);
     for (int i = 0; i < wsClients.size(); i++){

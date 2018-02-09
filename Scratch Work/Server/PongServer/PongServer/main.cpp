@@ -36,14 +36,20 @@ void closeHandler(int clientID){
 
 /* called when a client sends a message to the server */
 void messageHandler(int clientID, string message){
-    ostringstream os;
+    /*ostringstream os;
     os << "Stranger " << clientID << " says: " << message;
 
     vector<int> clientIDs = server.getClientIDs();
     for (int i = 0; i < clientIDs.size(); i++){
         if (clientIDs[i] != clientID)
             server.wsSend(clientIDs[i], os.str());
-    }
+    }*/
+	vector<int> clientIDs = server.getClientIDs();
+	if(message.substr(0,1) == "ID"){
+		server.wsgetClientIDs(clientID, message.substr(1, message.size()));
+	}
+	else if (message.substr(0, 1) == "")
+
 }
 
 /* called once per select() loop */
