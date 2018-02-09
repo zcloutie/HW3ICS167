@@ -99,7 +99,7 @@ public:
     void wsClose(int clientID);
     vector<int> getClientIDs();
     string getClientIP(int clientID);
-	void wsgetClientIDs(int clientID, string name);
+	void wssetClientCIDs(int clientID, string name);
 private:
     vector<wsClient *> wsClients;
     map<int, int> socketIDmap;

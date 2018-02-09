@@ -45,11 +45,11 @@ void messageHandler(int clientID, string message){
             server.wsSend(clientIDs[i], os.str());
     }*/
 	vector<int> clientIDs = server.getClientIDs();
-	if(message.substr(0,1) == "ID"){
-		server.wsgetClientIDs(clientID, message.substr(1, message.size()));
+	if (message.substr(0, 1) == "ID") { //client sent "ID:name"
+		server.wssetClientCIDs(clientID, message.substr(3, message.size()));
 	}
 	else if (message.substr(0, 1) == "")
-
+		
 }
 
 /* called once per select() loop */

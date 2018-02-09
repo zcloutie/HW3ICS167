@@ -128,7 +128,7 @@ string webSocket::getClientIP(int clientID){
 	return string(inet_ntop(AF_INET, &(wsClients[clientID]->addr), clientIP_str, INET_ADDRSTRLEN));
 }
 
-void webSocket::wsgetClientIDs(int clientID, string name)
+void webSocket::wssetClientCIDs(int clientID, string name)
 {
 	wsClients[clientID]->CID = name;
 }
