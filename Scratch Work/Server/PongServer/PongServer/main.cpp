@@ -7,7 +7,11 @@
 
 using namespace std;
 
+#define INTERVAL_MS 10
+
 webSocket server;
+
+int interval_clocks = CLOCKS_PER_SEC * INTERVAL_MS / 1000;
 
 /* called when a client connects */
 void openHandler(int clientID){
@@ -45,18 +49,20 @@ void messageHandler(int clientID, string message){
             server.wsSend(clientIDs[i], os.str());
     }*/
 	vector<int> clientIDs = server.getClientIDs();
-	if (message.substr(0, 1) == "ID") { //client sent "ID:name"
-		server.wssetClientCIDs(clientID, message.substr(3, message.size()));
+	if (message.substr(0, 1) == "ID") { 
+		server.wssetClientCIDs(clientID, message.substr(3, message.size())); //client sent "ID:name"
 	}
-	else if (message.substr(0, 1) == "")
-		
+	else if (message.substr(0, 1) == "") {
+
+	}
 }
 
 /* called once per select() loop */
 void periodicHandler(){
-    static time_t next = time(NULL) + 10;
-    time_t current = time(NULL);
+    static clock_t next = clock() + interval_clocks;
+    clock_t current = clock();
     if (current >= next){
+		/*
         ostringstream os;
 		//Deprecated ctime API in Windows 10
 		char timecstring[26];
@@ -68,8 +74,9 @@ void periodicHandler(){
         vector<int> clientIDs = server.getClientIDs();
         for (int i = 0; i < clientIDs.size(); i++)
             server.wsSend(clientIDs[i], os.str());
+		*/
 
-        next = time(NULL) + 10;
+        next = time(NULL) + interval_clocks;
     }
 }
 
