@@ -52,7 +52,19 @@ void messageHandler(int clientID, string message){
 	if (message.substr(0, 1) == "ID") { 
 		server.wssetClientCIDs(clientID, message.substr(3, message.size())); //client sent "ID:name"
 	}
-	else if (message.substr(0, 1) == "") {
+	else if (message.substr(0, 1) == "LD") { //When left button is pushed down
+
+	}
+
+	else if (message.substr(0, 1) == "LU") { //When left button is released
+
+	}
+
+	else if (message.substr(0, 1) == "RD") { //When right button is pushed down
+
+	}
+
+	else if (message.substr(0, 1) == "RU") { //When left button is released
 
 	}
 }

@@ -1,15 +1,32 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0" charset='UTF-8'/>
+<style>
+		input, textarea {border:1px solid #CCC;margin:0px;padding:0px}
+
+        #ip {line-height:20px}
+        #port {line-height:20px}
+		#body {max-width:800px;margin:auto}
+		#log {width:100%;height:400px}
+		#message {width:100%;line-height:20px}
+	</style>
+<div id='body'>
+        Server ip: <input type='text' id='ip' name='ip'>
+        Server port: <input type='text' id='port' name='port'>
+        <button type="button" id='cntBtn' onclick="connect();">Connect</button>
+		<textarea id='log' name='log' readonly='readonly'></textarea><br/>
+		<input type='text' id='message' name='message' />
+</div>
+</head>
+<body onload="startGame()">
 <style>
 canvas {
     border: 1px solid #d3d3d3;
     background-color: #f1f1f1;
 }
 </style>
-</head>
-<body onload="startGame()">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
 <script src="scratchjs.js"></script>
 
 <p>We have created a game area! (or at least an empty canvas)</p>

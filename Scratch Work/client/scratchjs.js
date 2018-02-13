@@ -43,6 +43,52 @@ var FancyWebSocket = function(url)
 	}
 };
 
+var Server;
+
+		function log( text ) {
+					$log = $('#log');
+					//Add text to log
+					$log.append(($log.val()?"\n":'')+text);
+					//Autoscroll
+					$log[0].scrollTop = $log[0].scrollHeight - $log[0].clientHeight;
+		}
+
+		function send( text ) {
+			Server.send( 'message', text );
+		}
+
+        function connect(){
+            log('Connecting...');
+			Server = new FancyWebSocket('ws://' + document.getElementById('ip').value + ':' + document.getElementById('port').value);
+
+			$('#message').keypress(function(e) {
+				if ( e.keyCode == 13 && this.value ) {
+					log( 'You: ' + this.value );
+					send( this.value );
+
+					$(this).val('');
+				}
+			});
+
+			//Let the user know we're connected
+			Server.bind('open', function() {
+                document.getElementById("cntBtn").disabled = true;
+				log( "Connected." );
+			});
+
+			//OH NOES! Disconnection occurred.
+			Server.bind('close', function( data ) {
+                document.getElementById("cntBtn").disabled = false;
+				log( "Disconnected." );
+			});
+
+			//Log any messages sent from server
+			Server.bind('message', function( payload ) {
+				log( payload );
+			});
+
+			Server.connect();
+        }
 
 
 
@@ -165,21 +211,43 @@ Ball.prototype.update = function(paddle1, paddle2) {
 };
 
 var keysDown = {};
+var leftdown = false;
+var rightdown = false;
 
 window.addEventListener("keydown", function(event) {
   keysDown[event.keyCode] = true;
 });
 
 window.addEventListener("keyup", function(event) {
+	var value = event.keyCode;   
+	//log(value);                 // USED FOR DEBUGGING
   delete keysDown[event.keyCode];
+  if (value == 37) { // Left arrow
+  leftdown = false;
+  //log( 'You: ' + 'LU' );        // USED FOR DEBUGGING
+  send('LU');} 
+  else if (value == 39) { // right arrow
+      rightdown = false;
+	  //log( 'You: ' + 'RU' );
+	  send('RU');}
 });
 
 Player.prototype.update = function() {
   for(var key in keysDown) {
     var value = Number(key);
-    if(value == 37) { // left arrow
+    if(value == 37 && !leftdown) { // left arrow
       this.paddle.move(-4, 0);
-    } else if (value == 39) { // right arrow
+	  //log( 'You: ' + 'LD' );   // USED FOR DEBUGGING
+	  send('LD');
+	  leftdown = true;
+    } if(value == 37 && leftdown) { // left arrow
+      this.paddle.move(-4, 0);
+    } else if (value == 39 && !rightdown) { // right arrow
+      this.paddle.move(4, 0);
+	  //log( 'You: ' + 'RD' );   // USED FOR DEBUGGING
+	  send('RD');
+	  rightdown = true;
+    } else if (value == 39 && rightdown) { // right arrow
       this.paddle.move(4, 0);
     } else {
       this.paddle.move(0, 0);
