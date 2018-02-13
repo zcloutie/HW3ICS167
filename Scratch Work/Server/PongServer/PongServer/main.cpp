@@ -29,7 +29,7 @@ void openHandler(int clientID){
 /* called when a client disconnects */
 void closeHandler(int clientID){
     ostringstream os;
-    os << "Stranger " << clientID << " has leaved.";
+    os << "Stranger " << clientID << " has left.";
 
     vector<int> clientIDs = server.getClientIDs();
     for (int i = 0; i < clientIDs.size(); i++){
@@ -53,19 +53,19 @@ void messageHandler(int clientID, string message){
 		server.wssetClientCIDs(clientID, message.substr(3, message.size())); //client sent "ID:name"
 	}
 	else if (message.substr(0, 1) == "LD") { //When left button is pushed down
-
+		server.gameState.setClientLeft(clientID, true);
 	}
 
 	else if (message.substr(0, 1) == "LU") { //When left button is released
-
+		server.gameState.setClientLeft(clientID, false);
 	}
 
 	else if (message.substr(0, 1) == "RD") { //When right button is pushed down
-
+		server.gameState.setClientRight(clientID, true);
 	}
 
 	else if (message.substr(0, 1) == "RU") { //When left button is released
-
+		server.gameState.setClientRight(clientID, false);
 	}
 }
 
@@ -87,6 +87,12 @@ void periodicHandler(){
         for (int i = 0; i < clientIDs.size(); i++)
             server.wsSend(clientIDs[i], os.str());
 		*/
+		server.gameState.update();
+
+		vector<int> clientIDs = server.getClientIDs();
+		for (int i = 0; i < clientIDs.size(); i++) {
+			server.wsSend(clientIDs[i], server.gameState.buildGameStateMessage());
+		}
 
         next = time(NULL) + interval_clocks;
     }

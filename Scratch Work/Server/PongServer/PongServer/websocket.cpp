@@ -659,6 +659,8 @@ void webSocket::wsAddClient(int socket, in_addr ip){
         wsClients[clientID] = newClient;
     }
     socketIDmap[socket] = clientID;
+
+	gameState.addPlayer(clientID); //add player to the game
 }
 
 void webSocket::setOpenHandler(defaultCallback callback){
@@ -725,7 +727,7 @@ void webSocket::startServer(int port){
         if (select(fdmax+1, &read_fds, NULL, NULL, &timeout) > 0){
             for (int i = 0; i <= fdmax; i++){
                 if (FD_ISSET(i, &read_fds)){
-                    if (i == listenfd){
+                    if (i == listenfd && wsClients.size() == 0){ //change this for Assignment 4, fine for now
                         socklen_t addrlen = sizeof(cli_addr);
                         int newfd = accept(listenfd, (struct sockaddr*)&cli_addr, &addrlen);
                         if (newfd != -1){
@@ -735,6 +737,7 @@ void webSocket::startServer(int port){
 							//printf("New connection from %s on socket %d\n", inet_ntoa(cli_addr.sin_addr), newfd);
 							char cli_addr_str[INET_ADDRSTRLEN];
 							printf("New connection from %s on socket %d\n", inet_ntop(AF_INET, &(cli_addr.sin_addr), cli_addr_str, INET_ADDRSTRLEN));
+							gameState.startGame(); //we have a player now, so start the game
                         }
                     }
                     else {
@@ -759,7 +762,7 @@ void webSocket::startServer(int port){
             nextPingTime = time(NULL) + 1;
         }
 
-        if (callPeriodic != NULL)
+        if (callPeriodic != NULL && gameState.isGameStarted())//make sure the game is started before updating
             callPeriodic();
     }
 }

@@ -1,4 +1,5 @@
 #include <vector>
+#include <string>
 using namespace std;
 
 #define ARENA_WIDTH 600
@@ -8,18 +9,66 @@ class GameState {
 public:
 	GameState() : ball(ARENA_WIDTH/2, ARENA_HEIGHT/2) {
 	}
+
+	bool isGameStarted() {
+		return gameStarted;
+	}
+
+	void startGame() {
+		gameStarted = true;
+	}
+
+	void update() {
+		for (int i = 0; i < players.size(); i++) {
+			players[i].update();
+		}
+
+		ball.update(players);
+	}
+
+	string buildGameStateMessage() {
+		string message = "";
+		for (int i = 0; i < players.size(); i++) {
+			message += "p" + to_string(i+1) + "p:" + to_string(players[i].x) + "," + to_string(players[i].y) + "|s" + to_string(i+1) + ":" + to_string(players[i].score) + "|";
+		}
+		return message + "pb:" + to_string(ball.x) + "," +  to_string(ball.y); //format is p1p:585,21|s1:100|p2p:45,54|s2:1205 ... |pnp:455,34|sn:1020|pb:212,543
+	}
+	
+	void setClientLeft(int clientID, bool isDown) {
+		for (int i = 0; i < players.size(); i++) {
+			if (players[i].clientID == clientID) {
+				players[i].setLeft(isDown);
+				break;
+			}
+		}
+	}
+
+	void setClientRight(int clientID, bool isDown) {
+		for (int i = 0; i < players.size(); i++) {
+			if (players[i].clientID == clientID) {
+				players[i].setRight(isDown);
+				break;
+			}
+		}
+	}
+
+	void addPlayer(int clientID) {
+		players.push_back(Paddle(clientID, ARENA_WIDTH / 2 - 25, ARENA_HEIGHT - 20, 50, 10));//this will need to be changed for Assignment 4
+	}
+
 private:	
 	vector<Paddle> players;
 	Ball ball;
+	bool gameStarted = false;
 };
 
 class Paddle {
 public:
-	Paddle(int startX, int startY, int width, int height) : x(startX), y(startY), width(width), height(height) {
+	Paddle(int ClientID, int startX, int startY, int width, int height) : clientID(ClientID), x(startX), y(startY), width(width), height(height) {
 	}
 
 	void update() {
-		x += speed * direction;
+		x += speed * ((-left)*(right ^ left)); // xor the values of right and left
 
 		if (x < 0) { //all the way to the left
 			x = 0;
@@ -29,13 +78,23 @@ public:
 		}
 	}
 
+	void setLeft(bool isDown) {
+		left = isDown;
+	}
+
+	void setRight(bool isDown) {
+		right = isDown;
+	}
+
 	int x;
 	int y;
     int width = 50;
 	int height = 10;
 	const int speed = 4;
-	int direction = 0; //will be set to 0 for neutral (dont move), -1 for left and 1 for right
+	bool right = false;
+	bool left = false;
 	int score = 0;
+	int clientID;
 };
 
 class Ball{
@@ -73,19 +132,19 @@ public:
 			paddles[0].score = 0; //this will have to be modified for Assignment 4 but should be fine for now
 		}
 
-		for (int i = 0; i < paddles.size; i++) {
+		for (int i = 0; i < paddles.size(); i++) {
 			if (topY < (paddles[i].y + paddles[i].height) && bottomY > paddles[i].y && topX < (paddles[i].x + paddles[i].width) && bottomX > paddles[i].x) {
 				ySpeed = -3;
-				xSpeed += paddles[i].speed * paddles[i].direction / 2;
+				xSpeed += paddles[i].speed * ((-paddles[i].left)*(paddles[i].right ^ paddles[i].left)) / 2;
 				y += ySpeed;
 				paddles[i].score++;
 			}
 		}
 	}
 
-private:
 	int x;
 	int y;
+private:
 	const int radius = 5;
 	int xSpeed = 0;
 	int ySpeed = 3;

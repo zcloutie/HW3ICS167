@@ -12,6 +12,7 @@
 #include <vector>
 #include <map>
 #include <time.h>
+#include "PongLogic.h"
 
 using namespace std;
 
@@ -80,26 +81,28 @@ public:
     size_t MessageBufferLength;            // the payload data length of MessageBuffer
 };
 
-class webSocket{
+class webSocket {
 public:
-    webSocket(){
-        callOnOpen = NULL;
-        callOnClose = NULL;
-        callOnMessage = NULL;
-        callPeriodic = NULL;
-    }
+	webSocket() {
+		callOnOpen = NULL;
+		callOnClose = NULL;
+		callOnMessage = NULL;
+		callPeriodic = NULL;
+	}
 
-    void setOpenHandler(defaultCallback callback);
-    void setCloseHandler(defaultCallback callback);
-    void setMessageHandler(messageCallback callback);
-    void setPeriodicHandler(nullCallback callback);
-    void startServer(int port);
-    void stopServer();
-    bool wsSend(int clientID, string message, bool binary = false);
-    void wsClose(int clientID);
-    vector<int> getClientIDs();
-    string getClientIP(int clientID);
+	void setOpenHandler(defaultCallback callback);
+	void setCloseHandler(defaultCallback callback);
+	void setMessageHandler(messageCallback callback);
+	void setPeriodicHandler(nullCallback callback);
+	void startServer(int port);
+	void stopServer();
+	bool wsSend(int clientID, string message, bool binary = false);
+	void wsClose(int clientID);
+	vector<int> getClientIDs();
+	string getClientIP(int clientID);
 	void wssetClientCIDs(int clientID, string name);
+
+	GameState gameState{};
 private:
     vector<wsClient *> wsClients;
     map<int, int> socketIDmap;
