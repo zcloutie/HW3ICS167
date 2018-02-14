@@ -1,3 +1,5 @@
+var ID = prompt("Enter your name (Max 8 characters)", "New001").substr(0, 8);
+
 var FancyWebSocket = function(url)
 {
 	var callbacks = {};
@@ -45,6 +47,8 @@ var FancyWebSocket = function(url)
 
 var Server;
 
+
+
 		function log( text ) {
 					$log = $('#log');
 					//Add text to log
@@ -74,6 +78,7 @@ var Server;
 			Server.bind('open', function() {
                 document.getElementById("cntBtn").disabled = true;
 				log( "Connected." );
+				send("ID:" + ID);
 			});
 
 			//OH NOES! Disconnection occurred.
@@ -85,10 +90,12 @@ var Server;
 			//Log any messages sent from server
 			Server.bind('message', function( payload ) {
 				log( payload );
+				
 			});
 
 			Server.connect();
         }
+		
 
 
 
@@ -131,17 +138,17 @@ function Player() {
    this.paddle = new Paddle(width/2 - 25, height - 20, 50, 10);
 }
 
-function Computer() {
+/*function Computer() {
   this.paddle = new Paddle(width/2 - 25, 10, 50, 10);
-}
+}*/
 
 Player.prototype.render = function() {
   this.paddle.render();
 };
 
-Computer.prototype.render = function() {
+/*Computer.prototype.render = function() {
   this.paddle.render();
-};
+};*/
 
 function Ball(x, y) {
   this.x = x;
@@ -159,19 +166,20 @@ Ball.prototype.render = function() {
 };
 
 var player = new Player();
-var computer = new Computer();
+var Score = 0;
+//var computer = new Computer();
 var ball = new Ball(width/2, height/2);
 
 var render = function() {
   context.fillStyle = "#AAAAAA";
   context.fillRect(0, 0, width, height);
   player.render();
-  computer.render();
+  //computer.render();
   ball.render();
 };
 
 Ball.prototype.update = function(paddle1, paddle2) {
-  this.x += this.x_speed;
+  /*this.x += this.x_speed;
   this.y += this.y_speed;
   var top_x = this.x - this.radius;
   var top_y = this.y - this.radius;
@@ -207,7 +215,7 @@ Ball.prototype.update = function(paddle1, paddle2) {
       this.x_speed += (paddle2.x_speed / 2);
       this.y += this.y_speed;
     }
-  }
+  }*/
 };
 
 var keysDown = {};
@@ -220,15 +228,15 @@ window.addEventListener("keydown", function(event) {
 
 window.addEventListener("keyup", function(event) {
 	var value = event.keyCode;   
-	//log(value);                 // USED FOR DEBUGGING
+	log(value);                 // USED FOR DEBUGGING
   delete keysDown[event.keyCode];
   if (value == 37) { // Left arrow
   leftdown = false;
-  //log( 'You: ' + 'LU' );        // USED FOR DEBUGGING
+  log( 'You: ' + 'LU' );        // USED FOR DEBUGGING
   send('LU');} 
   else if (value == 39) { // right arrow
       rightdown = false;
-	  //log( 'You: ' + 'RU' );
+	  log( 'You: ' + 'RU' );
 	  send('RU');}
 });
 
@@ -236,21 +244,15 @@ Player.prototype.update = function() {
   for(var key in keysDown) {
     var value = Number(key);
     if(value == 37 && !leftdown) { // left arrow
-      this.paddle.move(-4, 0);
-	  //log( 'You: ' + 'LD' );   // USED FOR DEBUGGING
+      //this.paddle.move(-4, 0);
+	  log( 'You: ' + 'LD' );   // USED FOR DEBUGGING
 	  send('LD');
 	  leftdown = true;
-    } if(value == 37 && leftdown) { // left arrow
-      this.paddle.move(-4, 0);
     } else if (value == 39 && !rightdown) { // right arrow
-      this.paddle.move(4, 0);
-	  //log( 'You: ' + 'RD' );   // USED FOR DEBUGGING
+      //this.paddle.move(4, 0);
+	  log( 'You: ' + 'RD' );   // USED FOR DEBUGGING
 	  send('RD');
 	  rightdown = true;
-    } else if (value == 39 && rightdown) { // right arrow
-      this.paddle.move(4, 0);
-    } else {
-      this.paddle.move(0, 0);
     }
   }
 };
@@ -271,11 +273,11 @@ Paddle.prototype.move = function(x, y) {
 
 var update = function() {
   player.update();
-  computer.update(ball);
-  ball.update(player.paddle, computer.paddle);
+  //computer.update(ball);
+  //ball.update(player.paddle, computer.paddle);
 };
 
-Computer.prototype.update = function(ball) {
+/*Computer.prototype.update = function(ball) {
   var x_pos = ball.x;
   var diff = -((this.paddle.x + (this.paddle.width / 2)) - x_pos);
   if(diff < 0 && diff < -4) { // max speed left
@@ -289,4 +291,4 @@ Computer.prototype.update = function(ball) {
   } else if (this.paddle.x + this.paddle.width > width) {
     this.paddle.x = width - this.paddle.width;
   }
-};
+};*/

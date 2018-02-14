@@ -1,1 +1,13 @@
-﻿  PongServer.vcxproj -> C:\Users\Zac C\Documents\Winter 18\ICS 167\HW3\GitHubBoo\HW3ICS167\Scratch Work\server\PongServer\Debug\PongServer.exe
+﻿  main.cpp
+c:\users\zac c\documents\winter 18\ics 167\hw3\githubboo\hw3ics167\scratch work\server\pongserver\pongserver\ponglogic.h(14): warning C4804: '-': unsafe use of type 'bool' in operation
+c:\users\zac c\documents\winter 18\ics 167\hw3\githubboo\hw3ics167\scratch work\server\pongserver\pongserver\ponglogic.h(78): warning C4018: '<': signed/unsigned mismatch
+c:\users\zac c\documents\winter 18\ics 167\hw3\githubboo\hw3ics167\scratch work\server\pongserver\pongserver\ponglogic.h(81): warning C4804: '-': unsafe use of type 'bool' in operation
+c:\users\zac c\documents\winter 18\ics 167\hw3\githubboo\hw3ics167\scratch work\server\pongserver\pongserver\ponglogic.h(110): warning C4018: '<': signed/unsigned mismatch
+c:\users\zac c\documents\winter 18\ics 167\hw3\githubboo\hw3ics167\scratch work\server\pongserver\pongserver\ponglogic.h(119): warning C4018: '<': signed/unsigned mismatch
+c:\users\zac c\documents\winter 18\ics 167\hw3\githubboo\hw3ics167\scratch work\server\pongserver\pongserver\ponglogic.h(126): warning C4018: '<': signed/unsigned mismatch
+c:\users\zac c\documents\winter 18\ics 167\hw3\githubboo\hw3ics167\scratch work\server\pongserver\pongserver\ponglogic.h(135): warning C4018: '<': signed/unsigned mismatch
+c:\users\zac c\documents\winter 18\ics 167\hw3\githubboo\hw3ics167\scratch work\server\pongserver\pongserver\main.cpp(22): warning C4018: '<': signed/unsigned mismatch
+c:\users\zac c\documents\winter 18\ics 167\hw3\githubboo\hw3ics167\scratch work\server\pongserver\pongserver\main.cpp(35): warning C4018: '<': signed/unsigned mismatch
+c:\users\zac c\documents\winter 18\ics 167\hw3\githubboo\hw3ics167\scratch work\server\pongserver\pongserver\main.cpp(93): warning C4018: '<': signed/unsigned mismatch
+c:\users\zac c\documents\winter 18\ics 167\hw3\githubboo\hw3ics167\scratch work\server\pongserver\pongserver\main.cpp(97): warning C4244: '=': conversion from 'time_t' to 'clock_t', possible loss of data
+  PongServer.vcxproj -> C:\Users\Zac C\Documents\Winter 18\ICS 167\HW3\GitHubBoo\HW3ICS167\Scratch Work\server\PongServer\Debug\PongServer.exe

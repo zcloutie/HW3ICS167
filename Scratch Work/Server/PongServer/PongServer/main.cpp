@@ -49,22 +49,22 @@ void messageHandler(int clientID, string message){
             server.wsSend(clientIDs[i], os.str());
     }*/
 	vector<int> clientIDs = server.getClientIDs();
-	if (message.substr(0, 1) == "ID") { 
+	if (message.substr(0, 2) == "ID") { 
 		server.wssetClientCIDs(clientID, message.substr(3, message.size())); //client sent "ID:name"
 	}
-	else if (message.substr(0, 1) == "LD") { //When left button is pushed down
+	else if (message.substr(0, 2) == "LD") { //When left button is pushed down
 		server.gameState.setClientLeft(clientID, true);
 	}
 
-	else if (message.substr(0, 1) == "LU") { //When left button is released
+	else if (message.substr(0, 2) == "LU") { //When left button is released
 		server.gameState.setClientLeft(clientID, false);
 	}
 
-	else if (message.substr(0, 1) == "RD") { //When right button is pushed down
+	else if (message.substr(0, 2) == "RD") { //When right button is pushed down
 		server.gameState.setClientRight(clientID, true);
 	}
 
-	else if (message.substr(0, 1) == "RU") { //When left button is released
+	else if (message.substr(0, 2) == "RU") { //When left button is released
 		server.gameState.setClientRight(clientID, false);
 	}
 }
