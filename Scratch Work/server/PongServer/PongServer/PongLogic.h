@@ -46,7 +46,7 @@ public:
 	Ball(int startX, int startY) : x(startX), y(startY), xSpeed(0), ySpeed(3), radius(5) {
 	}
 
-	void update(vector<Paddle> paddles) {
+	void update(vector<Paddle>& paddles) {
 		x += xSpeed;
 		y += ySpeed;
 		int topX = x - radius;
