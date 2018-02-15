@@ -101,6 +101,7 @@ var Server;
 						}
 						else if (split2[0] == "s1"){
 							Score = Number(split2[1]);
+							document.getElementById('score').innerHTML = "Score: " + Score;
 						}
 						else if (split2[0] == "pb"){
 							var split3 = split2[1].split(",");
@@ -108,10 +109,11 @@ var Server;
 							ball.y = Number(split3[1]);
 						}
 						else{
-							log("THIS IS NOT PROPER PROTOCOL/ ITS THE WELCOME HANDSHAKE");
+							//log("THIS IS NOT PROPER PROTOCOL/ ITS THE WELCOME HANDSHAKE");
 						}
 					}
-				} catch(e){log("ERROR");}
+				} catch(e){//log("ERROR");
+				}
 			});
 
 			Server.connect();
@@ -249,15 +251,12 @@ window.addEventListener("keydown", function(event) {
 
 window.addEventListener("keyup", function(event) {
 	var value = event.keyCode;   
-	//log(value);                 // USED FOR DEBUGGING
   delete keysDown[event.keyCode];
   if (value == 37) { // Left arrow
   leftdown = false;
-  //log( 'You: ' + 'LU' );        // USED FOR DEBUGGING
   send('LU');} 
   else if (value == 39) { // right arrow
       rightdown = false;
-	  log( 'You: ' + 'RU' );    // USED FOR DEBUGGING
 	  send('RU');}
 });
 
@@ -265,13 +264,9 @@ Player.prototype.update = function() {
   for(var key in keysDown) {
     var value = Number(key);
     if(value == 37 && !leftdown) { // left arrow
-      //this.paddle.move(-4, 0);
-	  //log( 'You: ' + 'LD' );   // USED FOR DEBUGGING
 	  send('LD');
 	  leftdown = true;
     } else if (value == 39 && !rightdown) { // right arrow
-      //this.paddle.move(4, 0);
-	  log( 'You: ' + 'RD' );   // USED FOR DEBUGGING
 	  send('RD');
 	  rightdown = true;
     }
