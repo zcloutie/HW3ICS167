@@ -89,29 +89,29 @@ var Server;
 
 			//Log any messages sent from server
 			Server.bind('message', function( payload ) {
-				log( payload );
+				//log( payload );
 				try{
 					var split = payload.split("|");
-					for (var sub in split){
-						var split2 = sub.split(":");
+					for (i = 0; i < split.length; i++){
+						var split2 = split[i].split(":");
 						if (split2[0] == "p1p"){
 							var split3 = split2[1].split(",");
-							Player.paddle.x = split3[0];
-							Player.paddle.y = split3[1];
+							player.paddle.x = Number(split3[0]);
+							player.paddle.y = Number(split3[1]);
 						}
 						else if (split2[0] == "s1"){
 							Score = Number(split2[1]);
 						}
 						else if (split2[0] == "pb"){
 							var split3 = split2[1].split(",");
-							Ball.x = split3[0];
-							Ball.y = split3[1];
+							ball.x = Number(split3[0]);
+							ball.y = Number(split3[1]);
 						}
 						else{
 							log("THIS IS NOT PROPER PROTOCOL/ ITS THE WELCOME HANDSHAKE");
 						}
 					}
-				} catch(e){log("NOT PROTOCOL/IS WELCOME HANDSHAKE");}
+				} catch(e){log("ERROR");}
 			});
 
 			Server.connect();
