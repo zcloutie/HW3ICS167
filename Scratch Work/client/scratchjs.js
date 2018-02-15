@@ -90,7 +90,28 @@ var Server;
 			//Log any messages sent from server
 			Server.bind('message', function( payload ) {
 				log( payload );
-				
+				try{
+					var split = payload.split("|");
+					for (var sub in split){
+						var split2 = sub.split(":");
+						if (split2[0] == "p1p"){
+							var split3 = split2[1].split(",");
+							Player.paddle.x = split3[0];
+							Player.paddle.y = split3[1];
+						}
+						else if (split2[0] == "s1"){
+							Score = Number(split2[1]);
+						}
+						else if (split2[0] == "pb"){
+							var split3 = split2[1].split(",");
+							Ball.x = split3[0];
+							Ball.y = split3[1];
+						}
+						else{
+							log("THIS IS NOT PROPER PROTOCOL/ ITS THE WELCOME HANDSHAKE");
+						}
+					}
+				} catch(e){log("NOT PROTOCOL/IS WELCOME HANDSHAKE");}
 			});
 
 			Server.connect();
@@ -228,15 +249,15 @@ window.addEventListener("keydown", function(event) {
 
 window.addEventListener("keyup", function(event) {
 	var value = event.keyCode;   
-	log(value);                 // USED FOR DEBUGGING
+	//log(value);                 // USED FOR DEBUGGING
   delete keysDown[event.keyCode];
   if (value == 37) { // Left arrow
   leftdown = false;
-  log( 'You: ' + 'LU' );        // USED FOR DEBUGGING
+  //log( 'You: ' + 'LU' );        // USED FOR DEBUGGING
   send('LU');} 
   else if (value == 39) { // right arrow
       rightdown = false;
-	  log( 'You: ' + 'RU' );
+	  //log( 'You: ' + 'RU' );    // USED FOR DEBUGGING
 	  send('RU');}
 });
 
@@ -245,12 +266,12 @@ Player.prototype.update = function() {
     var value = Number(key);
     if(value == 37 && !leftdown) { // left arrow
       //this.paddle.move(-4, 0);
-	  log( 'You: ' + 'LD' );   // USED FOR DEBUGGING
+	  //log( 'You: ' + 'LD' );   // USED FOR DEBUGGING
 	  send('LD');
 	  leftdown = true;
     } else if (value == 39 && !rightdown) { // right arrow
       //this.paddle.move(4, 0);
-	  log( 'You: ' + 'RD' );   // USED FOR DEBUGGING
+	  //log( 'You: ' + 'RD' );   // USED FOR DEBUGGING
 	  send('RD');
 	  rightdown = true;
     }
