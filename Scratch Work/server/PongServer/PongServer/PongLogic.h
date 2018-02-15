@@ -12,7 +12,7 @@ public:
 	}
 
 	void update() {
-		x += speed * ((-left)*(right ^ left)); // xor the values of right and left
+		x += speed * ((left?-left:true)*(right ^ left)); // xor the values of right and left
 
 		if (x < 0) { //all the way to the left
 			x = 0;

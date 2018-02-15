@@ -257,7 +257,7 @@ window.addEventListener("keyup", function(event) {
   send('LU');} 
   else if (value == 39) { // right arrow
       rightdown = false;
-	  //log( 'You: ' + 'RU' );    // USED FOR DEBUGGING
+	  log( 'You: ' + 'RU' );    // USED FOR DEBUGGING
 	  send('RU');}
 });
 
@@ -271,7 +271,7 @@ Player.prototype.update = function() {
 	  leftdown = true;
     } else if (value == 39 && !rightdown) { // right arrow
       //this.paddle.move(4, 0);
-	  //log( 'You: ' + 'RD' );   // USED FOR DEBUGGING
+	  log( 'You: ' + 'RD' );   // USED FOR DEBUGGING
 	  send('RD');
 	  rightdown = true;
     }
