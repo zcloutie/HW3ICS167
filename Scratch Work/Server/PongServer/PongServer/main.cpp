@@ -94,7 +94,7 @@ void periodicHandler(){
 			server.wsSend(clientIDs[i], server.gameState.buildGameStateMessage());
 		}
 
-        next = time(NULL) + interval_clocks;
+        next = clock() + interval_clocks;
     }
 }
 
@@ -108,7 +108,7 @@ int main(int argc, char *argv[]){
     server.setOpenHandler(openHandler);
     server.setCloseHandler(closeHandler);
     server.setMessageHandler(messageHandler);
-    //server.setPeriodicHandler(periodicHandler);
+    server.setPeriodicHandler(periodicHandler);
 
     /* start the chatroom server, listen to ip '127.0.0.1' and port '8000' */
     server.startServer(port);

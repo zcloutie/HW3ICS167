@@ -7,7 +7,8 @@ using namespace std;
 
 class Paddle {
 public:
-	Paddle(int ClientID, int startX, int startY, int width, int height) : clientID(ClientID), x(startX), y(startY), width(width), height(height) {
+	Paddle(int ClientID, int startX, int startY, int width, int height) : clientID(ClientID), x(startX), y(startY), width(width), height(height), speed(4), right(false),
+	left(false), score(0) {
 	}
 
 	void update() {
@@ -42,7 +43,7 @@ public:
 
 class Ball {
 public:
-	Ball(int startX, int startY) : x(startX), y(startY) {
+	Ball(int startX, int startY) : x(startX), y(startY), xSpeed(0), ySpeed(3), radius(5) {
 	}
 
 	void update(vector<Paddle> paddles) {
@@ -95,7 +96,7 @@ private:
 
 class GameState {
 public:
-	GameState() : ball(ARENA_WIDTH / 2, ARENA_HEIGHT / 2), players{} {
+	GameState() : ball(ARENA_WIDTH / 2, ARENA_HEIGHT / 2), players{}, gameStarted(false) {
 	}
 
 	bool isGameStarted() {
@@ -147,5 +148,5 @@ public:
 private:	
 	vector<Paddle> players;
 	Ball ball;
-	bool gameStarted = false;
+	bool gameStarted;
 };

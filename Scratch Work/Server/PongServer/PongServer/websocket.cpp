@@ -762,8 +762,10 @@ void webSocket::startServer(int port){
             nextPingTime = time(NULL) + 1;
         }
 
-        if (callPeriodic != NULL && gameState.isGameStarted())//make sure the game is started before updating
-            callPeriodic();
+		if (callPeriodic != NULL && gameState.isGameStarted()) {
+			//make sure the game is started before updating
+			callPeriodic();
+		}
     }
 }
 
