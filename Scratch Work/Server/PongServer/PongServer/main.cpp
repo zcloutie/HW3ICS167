@@ -71,9 +71,9 @@ void messageHandler(int clientID, string message){
 
 /* called once per select() loop */
 void periodicHandler(){
-    static clock_t next = clock() + interval_clocks;
-    clock_t current = clock();
-    if (current >= next){
+	static clock_t oldTime = clock();// +interval_clocks;
+    clock_t newTime = clock();
+    if (newTime >= oldTime + interval_clocks){
 		/*
         ostringstream os;
 		//Deprecated ctime API in Windows 10
@@ -87,14 +87,14 @@ void periodicHandler(){
         for (int i = 0; i < clientIDs.size(); i++)
             server.wsSend(clientIDs[i], os.str());
 		*/
-		server.gameState.update();
+		server.gameState.update(newTime - oldTime);
 
 		vector<int> clientIDs = server.getClientIDs();
 		for (int i = 0; i < clientIDs.size(); i++) {
 			server.wsSend(clientIDs[i], server.gameState.buildGameStateMessage());
 		}
 
-        next = clock() + interval_clocks;
+        oldTime = clock();
     }
 }
 

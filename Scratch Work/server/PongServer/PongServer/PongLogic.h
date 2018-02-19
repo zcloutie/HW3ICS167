@@ -11,8 +11,8 @@ public:
 	left(false), score(0) {
 	}
 
-	void update() {
-		x += speed * ((left?-left:true)*(right ^ left)); // xor the values of right and left
+	void update(float deltaTime) {
+		x += speed * ((left ? -left : true)*(right ^ left)) * (deltaTime/10.0); // xor the values of right and left
 
 		if (x < 0) { //all the way to the left
 			x = 0;
@@ -46,9 +46,9 @@ public:
 	Ball(int startX, int startY) : x(startX), y(startY), xSpeed(0), ySpeed(3), radius(5) {
 	}
 
-	void update(vector<Paddle>& paddles) {
-		x += xSpeed;
-		y += ySpeed;
+	void update(float deltaTime, vector<Paddle>& paddles) {
+		x += xSpeed * (deltaTime / 10.0);
+		y += ySpeed * (deltaTime / 10.0);
 		int topX = x - radius;
 		int topY = y - radius;
 		int bottomX = x + radius;
@@ -79,8 +79,8 @@ public:
 		for (int i = 0; i < paddles.size(); i++) {
 			if (topY < (paddles[i].y + paddles[i].height) && bottomY > paddles[i].y && topX < (paddles[i].x + paddles[i].width) && bottomX > paddles[i].x) {
 				ySpeed = -3;
-				xSpeed += paddles[i].speed * ((-paddles[i].left)*(paddles[i].right ^ paddles[i].left)) / 2;
-				y += ySpeed;
+				xSpeed += paddles[i].speed * ((paddles[i].left ? -paddles[i].left : true)*(paddles[i].right ^ paddles[i].left)) / 2;
+				y += ySpeed * (deltaTime / 10.0);
 				paddles[i].score++;
 			}
 		}
@@ -107,12 +107,12 @@ public:
 		gameStarted = true;
 	}
 
-	void update() {
+	void update(int deltaTime) {
 		for (int i = 0; i < players.size(); i++) {
-			players[i].update();
+			players[i].update(deltaTime);
 		}
 
-		ball.update(players);
+		ball.update(deltaTime, players);
 	}
 
 	string buildGameStateMessage() {
