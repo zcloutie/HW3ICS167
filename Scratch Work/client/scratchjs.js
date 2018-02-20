@@ -94,12 +94,12 @@ var Server;
 					var split = payload.split("|");
 					for (i = 0; i < split.length; i++){
 						var split2 = split[i].split(":");
-						if (split2[0] == "p1p"){
+						if (split2[0][0] == "p"){
 							var split3 = split2[1].split(",");
 							player.paddle.x = Number(split3[0]);
 							player.paddle.y = Number(split3[1]);
 						}
-						else if (split2[0] == "s1"){
+						else if (split2[0][0] == "s"){
 							Score = Number(split2[1]);
 							document.getElementById('score').innerHTML = "Score: " + Score;
 						}
