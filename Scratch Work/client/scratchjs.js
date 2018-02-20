@@ -103,7 +103,7 @@ var Server;
 							Score = Number(split2[1]);
 							document.getElementById('score').innerHTML = "Score: " + Score;
 						}
-						else if (split2[0] == "pb"){
+						else if (split2[0] == "bp"){
 							var split3 = split2[1].split(",");
 							ball.x = Number(split3[0]);
 							ball.y = Number(split3[1]);

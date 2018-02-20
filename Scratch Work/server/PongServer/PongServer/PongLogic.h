@@ -168,7 +168,7 @@ public:
 		for (int i = 0; i < players.size(); i++) {
 			message += "p" + to_string(i+1) + "p:" + to_string(players[i].x) + "," + to_string(players[i].y) + "|s" + to_string(i+1) + ":" + to_string(players[i].score) + "|";
 		}
-		return message + "pb:" + to_string(ball.x) + "," +  to_string(ball.y); //format is p1p:585,21|s1:100|p2p:45,54|s2:1205 ... |pnp:455,34|sn:1020|pb:212,543
+		return message + "bp:" + to_string(ball.x) + "," +  to_string(ball.y); //format is p1p:585,21|s1:100|p2p:45,54|s2:1205 ... |pnp:455,34|sn:1020|bp:212,543
 	}
 	
 	void setClientLeft(int clientID, bool isDown) {
