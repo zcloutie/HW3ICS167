@@ -727,7 +727,7 @@ void webSocket::startServer(int port){
         if (select(fdmax+1, &read_fds, NULL, NULL, &timeout) > 0){
             for (int i = 0; i <= fdmax; i++){
                 if (FD_ISSET(i, &read_fds)){
-                    if (i == listenfd && wsClients.size() == 0){ //change this for Assignment 4, fine for now
+                    if (i == listenfd && wsClients.size() < 4){
                         socklen_t addrlen = sizeof(cli_addr);
                         int newfd = accept(listenfd, (struct sockaddr*)&cli_addr, &addrlen);
                         if (newfd != -1){
@@ -737,10 +737,16 @@ void webSocket::startServer(int port){
 							//printf("New connection from %s on socket %d\n", inet_ntoa(cli_addr.sin_addr), newfd);
 							char cli_addr_str[INET_ADDRSTRLEN];
 							printf("New connection from %s on socket %d\n", inet_ntop(AF_INET, &(cli_addr.sin_addr), cli_addr_str, INET_ADDRSTRLEN));
-							gameState.startGame(); //we have a player now, so start the game
+							if (wsClients.size() == 4) {
+								gameState.startGame(); //we have all the players now, so start the game
+							}
                         }
                     }
                     else {
+						if (gameState.isGameStarted() && wsClients.size() < 4) {
+							stopServer(); //One of the clients disconnected in the middle of the game, which means we need to end the game by stopping the server.
+						}
+
                         int nbytes = recv(i, buf, sizeof(buf), 0);
                         if (socketIDmap.find(i) != socketIDmap.end()){
                             if (nbytes < 0)

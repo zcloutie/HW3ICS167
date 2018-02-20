@@ -4,21 +4,39 @@ using namespace std;
 
 #define ARENA_WIDTH 600
 #define ARENA_HEIGHT 600
+#define PADDLE_WIDTH 50
+#define PADDLE_HEIGHT 10
 
 class Paddle {
 public:
-	Paddle(int ClientID, int startX, int startY, int width, int height) : clientID(ClientID), x(startX), y(startY), width(width), height(height), speed(4), right(false),
-	left(false), score(0) {
+	Paddle(int playerNumber, int ClientID, int startX, int startY, int width, int height) : playerNum(playerNumber), clientID(ClientID), x(startX), y(startY), width(width), height(height), speed(4), 
+		right(false),left(false), score(0) {
 	}
 
 	void update(float deltaTime) {
-		x += speed * ((left ? -left : true)*(right ^ left)) * (deltaTime/10.0); // xor the values of right and left
+		switch (playerNum) {
+			case 1: //ommited the break statement here so that the case will be skipped over since player 1 and 2's movement logic is identical
+			case 2:
+				x += speed * ((left ? -left : true)*(right ^ left)) * (deltaTime / 10.0); // xor the values of right and left
 
-		if (x < 0) { //all the way to the left
-			x = 0;
-		}
-		else if (x + width > ARENA_WIDTH) { //all the way to the right
-			x = ARENA_WIDTH - width;
+				if (x < 0) { //all the way to the left
+					x = 0;
+				}
+				else if (x + width > ARENA_WIDTH) { //all the way to the right
+					x = ARENA_WIDTH - width;
+				}
+				break;
+			case 3://same thing as above break statement comment
+			case 4:
+				y += speed * ((left ? -left : true)*(right ^ left)) * (deltaTime / 10.0); // xor the values of right and left
+
+				if (y < 0) { //all the way to the top
+					y = 0;
+				}
+				else if (y + height > ARENA_HEIGHT) { //all the way to the bottom
+					y = ARENA_HEIGHT - height;
+				}
+				break;
 		}
 	}
 
@@ -39,6 +57,7 @@ public:
 	bool left = false;
 	int score = 0;
 	int clientID;
+	int playerNum;
 };
 
 class Ball {
@@ -54,18 +73,12 @@ public:
 		int bottomX = x + radius;
 		int bottomY = y + radius;
 
-		if (topX < 0) {
-			x = radius;
-			xSpeed = -xSpeed;
-		}
-		else if (bottomX > ARENA_WIDTH) {
-			x = ARENA_WIDTH - radius;
-			xSpeed = -xSpeed;
-		}
-
-		if (y < 0) { //this, ofcourse, will need to be changed for Assignment 4
-			y = radius;
-			ySpeed = -ySpeed;
+		if (y < 0) {
+			xSpeed = 0;
+			ySpeed = -3;
+			x = ARENA_WIDTH / 2;
+			y = ARENA_HEIGHT / 2;
+			paddles[1].score = 0; //set the score for the second player (top) to 0
 		}
 
 		if (y > ARENA_HEIGHT) {
@@ -73,14 +86,49 @@ public:
 			ySpeed = 3;
 			x = ARENA_WIDTH / 2;
 			y = ARENA_HEIGHT / 2;
-			paddles[0].score = 0; //this will have to be modified for Assignment 4 but should be fine for now
+			paddles[0].score = 0; //set the score for the first player (bottom) to 0
+		}
+
+		if (x < 0) {
+			xSpeed = -3;
+			ySpeed = 0;
+			x = ARENA_WIDTH / 2;
+			y = ARENA_HEIGHT / 2;
+			paddles[3].score = 0; //set the score for the fourth player (left) to 0
+		}
+
+		if (x > ARENA_WIDTH) {
+			xSpeed = 3;
+			ySpeed = 0;
+			x = ARENA_WIDTH / 2;
+			y = ARENA_HEIGHT / 2;
+			paddles[2].score = 0; //set the score for the third player (right) to 0
 		}
 
 		for (int i = 0; i < paddles.size(); i++) {
 			if (topY < (paddles[i].y + paddles[i].height) && bottomY > paddles[i].y && topX < (paddles[i].x + paddles[i].width) && bottomX > paddles[i].x) {
-				ySpeed = -3;
-				xSpeed += paddles[i].speed * ((paddles[i].left ? -paddles[i].left : true)*(paddles[i].right ^ paddles[i].left)) / 2;
-				y += ySpeed * (deltaTime / 10.0);
+				switch (i) {
+					case 0: //bottom player
+						ySpeed = -3;
+						xSpeed += paddles[i].speed * ((paddles[i].left ? -paddles[i].left : true)*(paddles[i].right ^ paddles[i].left)) / 2 + ((paddles[i].x + paddles[i].width / 2) - x) / 2;
+						y += ySpeed * (deltaTime / 10.0);
+						break;
+					case 1: //top player
+						ySpeed = 3;
+						xSpeed += paddles[i].speed * ((paddles[i].left ? -paddles[i].left : true)*(paddles[i].right ^ paddles[i].left)) / 2 + ((paddles[i].x + paddles[i].width / 2) - x) / 2;
+						y += ySpeed * (deltaTime / 10.0);
+						break;
+					case 2: //right player
+						xSpeed = -3;
+						ySpeed += paddles[i].speed * ((paddles[i].left ? -paddles[i].left : true)*(paddles[i].right ^ paddles[i].left)) / 2 + ((paddles[i].y + paddles[i].height / 2) - y) / 2;
+						x += xSpeed * (deltaTime / 10.0);
+						break;
+					case 3: //left player
+						xSpeed = 3;
+						ySpeed += paddles[i].speed * ((paddles[i].left ? -paddles[i].left : true)*(paddles[i].right ^ paddles[i].left)) / 2 + ((paddles[i].y + paddles[i].height / 2) - y) / 2;
+						x += xSpeed * (deltaTime / 10.0);
+						break;
+				}
 				paddles[i].score++;
 			}
 		}
@@ -142,7 +190,20 @@ public:
 	}
 
 	void addPlayer(int clientID) {
-		players.push_back(Paddle(clientID, ARENA_WIDTH / 2 - 25, ARENA_HEIGHT - 20, 50, 10));//this will need to be changed for Assignment 4
+		switch (players.size()) {
+			case 0:
+				players.push_back(Paddle(1, clientID, ARENA_WIDTH / 2 - PADDLE_WIDTH / 2, ARENA_HEIGHT - 2 * PADDLE_HEIGHT, PADDLE_WIDTH, PADDLE_HEIGHT));//bottom
+				break;
+			case 1:
+				players.push_back(Paddle(2, clientID, ARENA_WIDTH / 2 - PADDLE_WIDTH / 2, PADDLE_HEIGHT, PADDLE_WIDTH, PADDLE_HEIGHT));//top
+				break;
+			case 2:
+				players.push_back(Paddle(3, clientID, ARENA_WIDTH - 2 * PADDLE_HEIGHT, ARENA_HEIGHT / 2 + PADDLE_WIDTH / 2, PADDLE_HEIGHT, PADDLE_WIDTH));//right
+				break;
+			case 3:
+				players.push_back(Paddle(4, clientID, PADDLE_HEIGHT, ARENA_HEIGHT / 2 + PADDLE_WIDTH / 2, PADDLE_HEIGHT, PADDLE_WIDTH));//left
+				break;
+		}
 	}
 
 private:	
