@@ -740,6 +740,14 @@ void webSocket::startServer(int port){
 							if (wsClients.size() == 4) {
 								printf("Starting The Game!");
 								gameState.startGame(); //we have all the players now, so start the game
+								vector<int> clIds = getClientIDs();
+								string names = "";
+								for (int i = 0; i < wsClients.size(); i++) {
+									names += "n" + to_string(i + 1) + ":" + wsClients[i]->CID + "|";
+								}
+								for (int i = 0; i < wsClients.size(); i++) {
+									wsSend(clIds[i], names);
+								}
 							}
                         }
                     }
