@@ -155,6 +155,10 @@ public:
 		gameStarted = true;
 	}
 
+	void stopGame() {
+		gameStarted = false;
+	}
+
 	void update(int deltaTime) {
 		for (int i = 0; i < players.size(); i++) {
 			players[i].update(deltaTime);

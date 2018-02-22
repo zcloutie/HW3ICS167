@@ -36,7 +36,7 @@ void closeHandler(int clientID){
         if (clientIDs[i] != clientID)
             server.wsSend(clientIDs[i], os.str());
     }
-	server.stopServer();
+	server.gameState.stopGame();
 }
 
 /* called when a client sends a message to the server */

@@ -724,12 +724,6 @@ void webSocket::startServer(int port){
         read_fds = fds;
         timeout.tv_sec = 0;
         timeout.tv_usec = 10000;
-
-		if (gameState.isGameStarted() && wsClients.size() < 4) {
-			stopServer(); //One of the clients disconnected in the middle of the game, which means we need to end the game by stopping the server.
-			//return;
-		}
-
         if (select(fdmax+1, &read_fds, NULL, NULL, &timeout) > 0){
             for (int i = 0; i <= fdmax; i++){
                 if (FD_ISSET(i, &read_fds)){
