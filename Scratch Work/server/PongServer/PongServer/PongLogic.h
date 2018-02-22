@@ -110,22 +110,22 @@ public:
 				switch (i) {
 					case 0: //bottom player
 						ySpeed = -3;
-						xSpeed += paddles[i].speed * ((paddles[i].left ? -paddles[i].left : true)*(paddles[i].right ^ paddles[i].left)) / 2 + ((paddles[i].x + paddles[i].width / 2) - x) / 2;
+						xSpeed += paddles[i].speed * ((paddles[i].left ? -paddles[i].left : true)*(paddles[i].right ^ paddles[i].left)) / 2;//+ ((paddles[i].x + paddles[i].width / 2) - x) / 2;
 						y += ySpeed * (deltaTime / 10.0);
 						break;
 					case 1: //top player
 						ySpeed = 3;
-						xSpeed += paddles[i].speed * ((paddles[i].left ? -paddles[i].left : true)*(paddles[i].right ^ paddles[i].left)) / 2 + ((paddles[i].x + paddles[i].width / 2) - x) / 2;
+						xSpeed += paddles[i].speed * ((paddles[i].left ? -paddles[i].left : true)*(paddles[i].right ^ paddles[i].left)) / 2;//+ ((paddles[i].x + paddles[i].width / 2) - x) / 2;
 						y += ySpeed * (deltaTime / 10.0);
 						break;
 					case 2: //right player
 						xSpeed = -3;
-						ySpeed += paddles[i].speed * ((paddles[i].left ? -paddles[i].left : true)*(paddles[i].right ^ paddles[i].left)) / 2 + ((paddles[i].y + paddles[i].height / 2) - y) / 2;
+						ySpeed += paddles[i].speed * ((paddles[i].left ? -paddles[i].left : true)*(paddles[i].right ^ paddles[i].left)) / 2;//+ ((paddles[i].y + paddles[i].height / 2) - y) / 2;
 						x += xSpeed * (deltaTime / 10.0);
 						break;
 					case 3: //left player
 						xSpeed = 3;
-						ySpeed += paddles[i].speed * ((paddles[i].left ? -paddles[i].left : true)*(paddles[i].right ^ paddles[i].left)) / 2 + ((paddles[i].y + paddles[i].height / 2) - y) / 2;
+						ySpeed += paddles[i].speed * ((paddles[i].left ? -paddles[i].left : true)*(paddles[i].right ^ paddles[i].left)) / 2;//+ ((paddles[i].y + paddles[i].height / 2) - y) / 2;
 						x += xSpeed * (deltaTime / 10.0);
 						break;
 				}
@@ -198,10 +198,10 @@ public:
 				players.push_back(Paddle(2, clientID, ARENA_WIDTH / 2 - PADDLE_WIDTH / 2, PADDLE_HEIGHT, PADDLE_WIDTH, PADDLE_HEIGHT));//top
 				break;
 			case 2:
-				players.push_back(Paddle(3, clientID, ARENA_WIDTH - 2 * PADDLE_HEIGHT, ARENA_HEIGHT / 2 + PADDLE_WIDTH / 2, PADDLE_HEIGHT, PADDLE_WIDTH));//right
+				players.push_back(Paddle(3, clientID, ARENA_WIDTH - 2 * PADDLE_HEIGHT, ARENA_HEIGHT / 2 - PADDLE_WIDTH / 2, PADDLE_HEIGHT, PADDLE_WIDTH));//right
 				break;
 			case 3:
-				players.push_back(Paddle(4, clientID, PADDLE_HEIGHT, ARENA_HEIGHT / 2 + PADDLE_WIDTH / 2, PADDLE_HEIGHT, PADDLE_WIDTH));//left
+				players.push_back(Paddle(4, clientID, PADDLE_HEIGHT, ARENA_HEIGHT / 2 - PADDLE_WIDTH / 2, PADDLE_HEIGHT, PADDLE_WIDTH));//left
 				break;
 		}
 	}

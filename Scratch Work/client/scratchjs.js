@@ -96,8 +96,8 @@ var Server;
 						var split2 = split[i].split(":");
 						if (split2[0][0] == "p"){
 							var split3 = split2[1].split(",");
-							player.paddle.x = Number(split3[0]);
-							player.paddle.y = Number(split3[1]);
+							players[Number(split2[0][1])-1].paddle.x = Number(split3[0]);
+							players[Number(split2[0][1])-1].paddle.y = Number(split3[1]);
 						}
 						else if (split2[0][0] == "s"){
 							Score = Number(split2[1]);
@@ -129,6 +129,8 @@ var animate = window.requestAnimationFrame ||
 var canvas = document.createElement('canvas');
 var width = 600;
 var height = 600;
+var paddleWidth = 50;
+var paddleHeight = 10;
 canvas.width = width;
 canvas.height = height;
 var context = canvas.getContext('2d');
@@ -136,6 +138,10 @@ window.onload = function() {
   document.body.appendChild(canvas);
   animate(step);
 };
+
+window.onclose = function(){
+	server.disconnect();
+}
 
 var step = function() {
   update();
@@ -157,8 +163,8 @@ Paddle.prototype.render = function() {
   context.fillRect(this.x, this.y, this.width, this.height);
 };
 
-function Player() {
-   this.paddle = new Paddle(width/2 - 25, height - 20, 50, 10);
+function Player(x, y, width, height) {
+   this.paddle = new Paddle(x, y, width, height);
 }
 
 /*function Computer() {
@@ -188,7 +194,10 @@ Ball.prototype.render = function() {
   context.fill();
 };
 
-var player = new Player();
+var players = [new Player(width/2 - paddleWidth/2, height - 2*paddleHeight, paddleWidth, paddleHeight),
+new Player(width/2 - paddleWidth/2, paddleHeight, paddleWidth, paddleHeight),
+new Player(width - 2*paddleHeight, height/2 - paddleWidth/2, paddleHeight, paddleWidth),
+new Player(paddleHeight, height/2 - paddleWidth/2, paddleHeight, paddleWidth)];
 var Score = 0;
 //var computer = new Computer();
 var ball = new Ball(width/2, height/2);
@@ -196,7 +205,9 @@ var ball = new Ball(width/2, height/2);
 var render = function() {
   context.fillStyle = "#AAAAAA";
   context.fillRect(0, 0, width, height);
-  player.render();
+  for(i = 0; i < players.length; i++){
+	  players[i].render();
+  }
   //computer.render();
   ball.render();
 };
@@ -288,7 +299,7 @@ Paddle.prototype.move = function(x, y) {
 }
 
 var update = function() {
-  player.update();
+  players[0].update();
   //computer.update(ball);
   //ball.update(player.paddle, computer.paddle);
 };
