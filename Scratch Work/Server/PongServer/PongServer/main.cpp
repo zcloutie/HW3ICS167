@@ -52,6 +52,13 @@ void messageHandler(int clientID, string message){
 	vector<int> clientIDs = server.getClientIDs();
 	if (message.substr(0, 2) == "ID") { 
 		server.wssetClientCIDs(clientID, message.substr(3, message.size())); //client sent "ID:name"
+		string names = "";
+		for (int i = 0; i < clientIDs.size(); i++) {
+			names += "n" + to_string(i+1) + ":" + server.getwsClientName(i) + "|";
+		}
+		for (int i = 0; i < clientIDs.size(); i++) {
+			server.wsSend(clientIDs[i], names);
+		}
 	}
 	else if (message.substr(0, 2) == "LD") { //When left button is pushed down
 		server.gameState.setClientLeft(clientID, true);

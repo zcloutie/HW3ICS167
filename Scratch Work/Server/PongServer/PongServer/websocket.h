@@ -101,6 +101,7 @@ public:
 	vector<int> getClientIDs();
 	string getClientIP(int clientID);
 	void wssetClientCIDs(int clientID, string name);
+	string getwsClientName(int index);
 
 	GameState gameState{};
 private:
