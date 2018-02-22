@@ -100,8 +100,13 @@ var Server;
 							players[Number(split2[0][1])-1].paddle.y = Number(split3[1]);
 						}
 						else if (split2[0][0] == "s"){
-							Score = Number(split2[1]);
-							document.getElementById('score').innerHTML = "Score: " + Score;
+							if (split2[0][1] == "1"){Score1 = Number(split2[1]);}
+							else if (split2[0][1] == "2"){Score2 = Number(split2[1]);}
+							else if (split2[0][1] == "3"){Score3 = Number(split2[1]);}
+							else if (split2[0][1] == "4"){Score4 = Number(split2[1]);}
+							else{log("This is wrong score int");}
+							document.getElementById('score').innerHTML = "Scores: " + Score1 + ", " + Score2 + ", " + Score3 + ", " + Score4;
+							
 						}
 						else if (split2[0] == "bp"){
 							var split3 = split2[1].split(",");
@@ -198,7 +203,10 @@ var players = [new Player(width/2 - paddleWidth/2, height - 2*paddleHeight, padd
 new Player(width/2 - paddleWidth/2, paddleHeight, paddleWidth, paddleHeight),
 new Player(width - 2*paddleHeight, height/2 - paddleWidth/2, paddleHeight, paddleWidth),
 new Player(paddleHeight, height/2 - paddleWidth/2, paddleHeight, paddleWidth)];
-var Score = 0;
+var Score1 = 0;
+var Score2 = 0;
+var Score3 = 0;
+var Score4 = 0;
 //var computer = new Computer();
 var ball = new Ball(width/2, height/2);
 
