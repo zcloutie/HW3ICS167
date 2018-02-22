@@ -108,6 +108,16 @@ var Server;
 							document.getElementById('score').innerHTML = "Scores: " + Score1 + ", " + Score2 + ", " + Score3 + ", " + Score4;
 							
 						}
+						
+						else if (split2[0][0] == "n"){
+							if (split2[0][1] == "1"){Name1 = split2[1];}
+							else if (split2[0][1] == "2"){Name2 = split2[1];}
+							else if (split2[0][1] == "3"){Name3 = split2[1];}
+							else if (split2[0][1] == "4"){Name4 = split2[1];}
+							else{log("This is wrong name int");}
+							document.getElementById('names').innerHTML = "Names: " + Name1 + ", " + Name2 + ", " + Name3 + ", " + Name4;
+							
+						}
 						else if (split2[0] == "bp"){
 							var split3 = split2[1].split(",");
 							ball.x = Number(split3[0]);
@@ -207,6 +217,10 @@ var Score1 = 0;
 var Score2 = 0;
 var Score3 = 0;
 var Score4 = 0;
+var Name1 = "";
+var Name2 = "";
+var Name3 = "";
+var Name4 = "";
 //var computer = new Computer();
 var ball = new Ball(width/2, height/2);
 
