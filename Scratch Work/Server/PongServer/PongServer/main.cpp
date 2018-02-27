@@ -4,6 +4,7 @@
 #include <sstream>
 #include <time.h>
 #include "websocket.h"
+#include <random>
 
 using namespace std;
 
@@ -15,6 +16,19 @@ vector<pair<int, pair<string, int>>> inQueue{};
 vector<pair<int, pair<string, int>>> outQueue{};
 
 int latency = 0;
+
+int latencyAccelleration = 1;
+
+int latencyType = -1;
+
+int minLatency = 0;
+int maxLatency = 0;
+
+random_device device;
+
+default_random_engine randEngine(device());
+
+uniform_int_distribution<int> uniDistribution;
 
 int interval_clocks = CLOCKS_PER_SEC * INTERVAL_MS / 1000;
 
@@ -113,7 +127,7 @@ void messageHandler(int clientID, string message){
         if (clientIDs[i] != clientID)
             server.wsSend(clientIDs[i], os.str());
     }*/
-	enqueInput(clientID, message, clock() + latency);
+	enqueInput(clientID, message, clock() + produceNextLatency());
 }
 
 /* called once per select() loop */
@@ -124,6 +138,8 @@ void periodicHandler(){
 		processInput(newTime);
 
 		server.gameState.update(newTime - oldTime);
+
+		produceNextLatency();
 
 		vector<int> clientIDs = server.getClientIDs();
 		for (int i = 0; i < clientIDs.size(); i++) {
@@ -136,11 +152,60 @@ void periodicHandler(){
     }
 }
 
+int produceNextLatency() {
+
+	switch (latencyType) {
+		case 1:
+			break;
+		case 2:
+			latency = uniDistribution(randEngine);
+			break;
+		case 3:
+			if (latency + latencyAccelleration < maxLatency) {
+				latency += latencyAccelleration;
+			}
+			else {
+				latency = maxLatency;
+			}
+			break;
+	}
+
+	return latency;
+}
+
 int main(int argc, char *argv[]){
     int port;
 
     cout << "Please set server port: ";
     cin >> port;
+
+	cout << "Please select latency type:\n 1: Fixed\n 2: Random\n 3: Incremental\n";
+	cin >> latencyType;
+
+
+	switch (latencyType) {
+		case 1:
+			cout << "Please enter the amount of desired latency: ";
+			cin >> latency;
+			break;
+		case 2:
+			cout << "Please enter the minimum desired latency: ";
+			cin >> minLatency;
+
+			cout << "Please enter the maximum desired latency: ";
+			cin >> maxLatency;
+
+			uniDistribution.param(uniform_int_distribution<int>::param_type(minLatency, maxLatency));
+			break;
+		case 3:
+			cout << "Please enter the minimum desired latency: ";
+			cin >> minLatency >> latency;
+
+			cout << "Please enter the maximum desired latency: ";
+			cin >> maxLatency;
+			break;
+	}
+	
 
     /* set event handler */
     server.setOpenHandler(openHandler);
