@@ -127,7 +127,6 @@ void periodicHandler(){
 
 		vector<int> clientIDs = server.getClientIDs();
 		for (int i = 0; i < clientIDs.size(); i++) {
-			server.wsSend(clientIDs[i], server.gameState.buildGameStateMessage());
 			enqueOutput(clientIDs[i], server.gameState.buildGameStateMessage(), newTime + latency);
 		}
 
