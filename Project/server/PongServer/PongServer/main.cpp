@@ -17,6 +17,8 @@ vector<pair<int, pair<string, int>>> outQueue{};
 
 int latency = 0;
 
+vector<int> latencies{0,0,0,0};
+
 int latencyAccelleration = 1;
 
 int latencyType = -1;
@@ -36,25 +38,25 @@ void enqueInput(int clientID, string message, int expectedTime) {
 	inQueue.push_back(make_pair(expectedTime, make_pair(message, clientID)));
 }
 
-int produceNextLatency() {
+int produceNextLatency(int clientIndex) {
 
 	switch (latencyType) {
 	case 1:
 		break;
 	case 2:
-		latency = uniDistribution(randEngine);
+		latencies[clientIndex] = uniDistribution(randEngine);
 		break;
 	case 3:
-		if (latency + latencyAccelleration < maxLatency) {
-			latency += latencyAccelleration;
+		if (latencies[clientIndex] + latencyAccelleration < maxLatency) {
+			latencies[clientIndex] += latencyAccelleration;
 		}
 		else {
-			latency = maxLatency;
+			latencies[clientIndex] = maxLatency;
 		}
 		break;
 	}
 
-	return latency;
+	return latencies[clientIndex];
 }
 
 void processInput(int currentTime) {
@@ -148,7 +150,12 @@ void messageHandler(int clientID, string message){
         if (clientIDs[i] != clientID)
             server.wsSend(clientIDs[i], os.str());
     }*/
-	enqueInput(clientID, message, clock() + produceNextLatency());
+	vector<int> clientIDs = server.getClientIDs();
+	for (int i = 0; i < clientIDs.size(); i++) {
+		if (clientIDs[i] == clientID) {
+			enqueInput(clientID, message, clock() + produceNextLatency(i));
+		}
+	}
 }
 
 /* called once per select() loop */
@@ -160,11 +167,9 @@ void periodicHandler(){
 
 		server.gameState.update(newTime - oldTime);
 
-		produceNextLatency();
-
 		vector<int> clientIDs = server.getClientIDs();
 		for (int i = 0; i < clientIDs.size(); i++) {
-			enqueOutput(clientIDs[i], server.gameState.buildGameStateMessage(), newTime + latency);
+			enqueOutput(clientIDs[i], server.gameState.buildGameStateMessage(), newTime + produceNextLatency(i));
 		}
 
 		sendOutput(newTime);
@@ -188,7 +193,7 @@ int main(int argc, char *argv[]){
 	switch (latencyType) {
 		case 1:
 			cout << "Please enter the amount of desired latency: ";
-			cin >> latency;
+			cin >> latencies[0], latencies[1], latencies[2], latencies[3];
 			break;
 		case 2:
 			cout << "Please enter the minimum desired latency: ";
@@ -201,7 +206,7 @@ int main(int argc, char *argv[]){
 			break;
 		case 3:
 			cout << "Please enter the minimum desired latency: ";
-			cin >> minLatency >> latency;
+			cin >> minLatency, latencies[0], latencies[1], latencies[2], latencies[3];
 
 			cout << "Please enter the maximum desired latency: ";
 			cin >> maxLatency;
