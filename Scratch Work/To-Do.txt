@@ -1,5 +1,0 @@
-Get the client to only send a message about  changed button state, possibly using the add even listener keyup keydown functions
-
-Server then needs to process the key up key down from the client which it then uses to move the paddle (control input messages protocal IE GO TO MESSAGEHANDLER FUNCTION IN MAIN.CPP)
-
-The server needs to have a representation of the game and its state, so have classes for the paddle, ball, with appropriate members and member data (stuff like x and y pos, variables that indicate if its moving)
