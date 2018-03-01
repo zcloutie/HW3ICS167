@@ -71,9 +71,10 @@ void processInput(int currentTime) {
 
 			long long num = 0;
 			istringstream(message.first.substr(0, message.first.find("|"))) >> num;
+			long long currTime = chrono::duration_cast<chrono::milliseconds>(chrono::system_clock::now().time_since_epoch()).count();
 			for (int i = 0; i < clientIDs.size(); i++) {
 				if (clientIDs[i] == message.second) {
-					estimatedLatencies[i] =  chrono::duration_cast<chrono::milliseconds>(chrono::system_clock::now().time_since_epoch()).count() - num;
+					estimatedLatencies[i] = currTime - num;
 					break;
 				}
 			}
