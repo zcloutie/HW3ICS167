@@ -1,5 +1,6 @@
 #include <vector>
 #include <string>
+#include <chrono>
 using namespace std;
 
 #define ARENA_WIDTH 600
@@ -168,7 +169,7 @@ public:
 	}
 
 	string buildGameStateMessage() {
-		string message = "";
+		string message = to_string(chrono::duration_cast<chrono::milliseconds>(chrono::system_clock::now().time_since_epoch()).count()) + "|";
 		for (int i = 0; i < players.size(); i++) {
 			message += "p" + to_string(i+1) + "p:" + to_string(players[i].x) + "," + to_string(players[i].y) + "|s" + to_string(i+1) + ":" + to_string(players[i].score) + "|";
 		}

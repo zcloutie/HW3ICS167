@@ -16,6 +16,9 @@ vector<pair<int, pair<string, int>>> inQueue{};
 vector<pair<int, pair<string, int>>> outQueue{};
 
 int latency = 0;
+long estimatedLatency = 0;
+
+vector<long long> estimatedLatencies{ 0,0,0,0 };
 
 vector<int> latencies{0,0,0,0};
 
@@ -65,7 +68,17 @@ void processInput(int currentTime) {
 			pair<string, int> message = inQueue[i].second;
 
 			vector<int> clientIDs = server.getClientIDs();
-			if (message.first.substr(0, 2) == "ID") {
+
+			long long num = 0;
+			istringstream(message.first.substr(0, message.first.find("|"))) >> num;
+			for (int i = 0; i < clientIDs.size(); i++) {
+				if (clientIDs[i] == message.second) {
+					estimatedLatencies[i] =  chrono::duration_cast<chrono::milliseconds>(chrono::system_clock::now().time_since_epoch()).count() - num;
+					break;
+				}
+			}
+			
+			if (message.first.substr(message.first.find("|") + 1, message.first.find("|") + 3) == "ID") {
 				server.wssetClientCIDs(message.second, message.first.substr(3, message.first.size())); //client sent "ID:name"
 				string names = "";
 				for (int i = 0; i < clientIDs.size(); i++) {
@@ -75,19 +88,19 @@ void processInput(int currentTime) {
 					server.wsSend(clientIDs[i], names);
 				}
 			}
-			else if (message.first.substr(0, 2) == "LD") { //When left button is pushed down
+			else if (message.first.substr(message.first.find("|")+1, message.first.find("|") + 3) == "LD") { //When left button is pushed down
 				server.gameState.setClientLeft(message.second, true);
 			}
 
-			else if (message.first.substr(0, 2) == "LU") { //When left button is released
+			else if (message.first.substr(message.first.find("|")+1, message.first.find("|") + 3) == "LU") { //When left button is released
 				server.gameState.setClientLeft(message.second, false);
 			}
 
-			else if (message.first.substr(0, 2) == "RD") { //When right button is pushed down
+			else if (message.first.substr(message.first.find("|")+1, message.first.find("|") + 3) == "RD") { //When right button is pushed down
 				server.gameState.setClientRight(message.second, true);
 			}
 
-			else if (message.first.substr(0, 2) == "RU") { //When left button is released
+			else if (message.first.substr(message.first.find("|")+1, message.first.find("|") + 3) == "RU") { //When left button is released
 				server.gameState.setClientRight(message.second, false);
 			}
 
@@ -170,6 +183,7 @@ void periodicHandler(){
 		vector<int> clientIDs = server.getClientIDs();
 		for (int i = 0; i < clientIDs.size(); i++) {
 			enqueOutput(clientIDs[i], server.gameState.buildGameStateMessage(), newTime + produceNextLatency(i));
+			cout << estimatedLatencies[i] << endl;
 		}
 
 		sendOutput(newTime);
