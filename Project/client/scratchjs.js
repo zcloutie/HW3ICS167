@@ -78,7 +78,7 @@ var Server;
 			Server.bind('open', function() {
                 document.getElementById("cntBtn").disabled = true;
 				log( "Connected." );
-				send((new Date).getTime() + "ID:" + ID);
+				send((new Date).getTime() + "|ID:" + ID);
 			});
 
 			//OH NOES! Disconnection occurred.
@@ -130,6 +130,7 @@ var Server;
 							//log("THIS IS NOT PROPER PROTOCOL/ ITS THE WELCOME HANDSHAKE");
 						}
 					}
+					send((new Date).getTime() + "|");
 				} catch(e){//log("ERROR");
 				}
 			});
