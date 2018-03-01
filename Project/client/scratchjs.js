@@ -78,7 +78,7 @@ var Server;
 			Server.bind('open', function() {
                 document.getElementById("cntBtn").disabled = true;
 				log( "Connected." );
-				send("ID:" + ID);
+				send((new Date).getTime() + "ID:" + ID);
 			});
 
 			//OH NOES! Disconnection occurred.
@@ -92,8 +92,8 @@ var Server;
 				//log( payload );
 				try{
 					var split = payload.split("|");
-					var timestamp = new Date(split[0])
-					Ping = new Date() - timestamp;
+					var timestamp = split[0];
+					Ping = (new Date).getTime() - timestamp;
 					document.getElementById('ping').innerHTML = "Ping: " + Ping;
 					for (i = 1; i < split.length; i++){
 						var split2 = split[i].split(":");
@@ -291,20 +291,20 @@ window.addEventListener("keyup", function(event) {
   delete keysDown[event.keyCode];
   if (value == 37) { // Left arrow
   leftdown = false;
-  send(new Date().getTime() + '|LU');} 
+  send((new Date).getTime() + '|LU');} 
   else if (value == 39) { // right arrow
       rightdown = false;
-	  send(new Date().getTime() + '|RU');}
+	  send((new Date).getTime() + '|RU');}
 });
 
 Player.prototype.update = function() {
   for(var key in keysDown) {
     var value = Number(key);
     if(value == 37 && !leftdown) { // left arrow
-	  send(new Date().getTime() + '|LD');
+	  send((new Date).getTime() + '|LD');
 	  leftdown = true;
     } else if (value == 39 && !rightdown) { // right arrow
-	  send(new Date().getTime() + '|RD');
+	  send((new Date).getTime() + '|RD');
 	  rightdown = true;
     }
   }
