@@ -92,7 +92,10 @@ var Server;
 				//log( payload );
 				try{
 					var split = payload.split("|");
-					for (i = 0; i < split.length; i++){
+					var timestamp = new Date(split[0])
+					Ping = new Date() - timestamp;
+					document.getElementById('ping').innerHTML = "Ping: " + Ping;
+					for (i = 1; i < split.length; i++){
 						var split2 = split[i].split(":");
 						if (split2[0][0] == "p"){
 							var split3 = split2[1].split(",");
@@ -221,6 +224,7 @@ var Name1 = "";
 var Name2 = "";
 var Name3 = "";
 var Name4 = "";
+var Ping = 0;
 //var computer = new Computer();
 var ball = new Ball(width/2, height/2);
 
@@ -287,20 +291,20 @@ window.addEventListener("keyup", function(event) {
   delete keysDown[event.keyCode];
   if (value == 37) { // Left arrow
   leftdown = false;
-  send('LU');} 
+  send(new Date().getTime() + '|LU');} 
   else if (value == 39) { // right arrow
       rightdown = false;
-	  send('RU');}
+	  send(new Date().getTime() + '|RU');}
 });
 
 Player.prototype.update = function() {
   for(var key in keysDown) {
     var value = Number(key);
     if(value == 37 && !leftdown) { // left arrow
-	  send('LD');
+	  send(new Date().getTime() + '|LD');
 	  leftdown = true;
     } else if (value == 39 && !rightdown) { // right arrow
-	  send('RD');
+	  send(new Date().getTime() + '|RD');
 	  rightdown = true;
     }
   }
