@@ -1,0 +1,30 @@
+﻿  main.cpp
+e:\users\harris\documents\github\hw3ics167\project\server\pongserver\pongserver\ponglogic.h(21): warning C4804: '-': unsafe use of type 'bool' in operation
+e:\users\harris\documents\github\hw3ics167\project\server\pongserver\pongserver\ponglogic.h(21): warning C4244: '+=': conversion from 'double' to 'int', possible loss of data
+e:\users\harris\documents\github\hw3ics167\project\server\pongserver\pongserver\ponglogic.h(32): warning C4804: '-': unsafe use of type 'bool' in operation
+e:\users\harris\documents\github\hw3ics167\project\server\pongserver\pongserver\ponglogic.h(32): warning C4244: '+=': conversion from 'double' to 'int', possible loss of data
+e:\users\harris\documents\github\hw3ics167\project\server\pongserver\pongserver\ponglogic.h(70): warning C4244: '+=': conversion from 'double' to 'int', possible loss of data
+e:\users\harris\documents\github\hw3ics167\project\server\pongserver\pongserver\ponglogic.h(71): warning C4244: '+=': conversion from 'double' to 'int', possible loss of data
+e:\users\harris\documents\github\hw3ics167\project\server\pongserver\pongserver\ponglogic.h(109): warning C4018: '<': signed/unsigned mismatch
+e:\users\harris\documents\github\hw3ics167\project\server\pongserver\pongserver\ponglogic.h(114): warning C4804: '-': unsafe use of type 'bool' in operation
+e:\users\harris\documents\github\hw3ics167\project\server\pongserver\pongserver\ponglogic.h(115): warning C4244: '+=': conversion from 'double' to 'int', possible loss of data
+e:\users\harris\documents\github\hw3ics167\project\server\pongserver\pongserver\ponglogic.h(119): warning C4804: '-': unsafe use of type 'bool' in operation
+e:\users\harris\documents\github\hw3ics167\project\server\pongserver\pongserver\ponglogic.h(120): warning C4244: '+=': conversion from 'double' to 'int', possible loss of data
+e:\users\harris\documents\github\hw3ics167\project\server\pongserver\pongserver\ponglogic.h(124): warning C4804: '-': unsafe use of type 'bool' in operation
+e:\users\harris\documents\github\hw3ics167\project\server\pongserver\pongserver\ponglogic.h(125): warning C4244: '+=': conversion from 'double' to 'int', possible loss of data
+e:\users\harris\documents\github\hw3ics167\project\server\pongserver\pongserver\ponglogic.h(129): warning C4804: '-': unsafe use of type 'bool' in operation
+e:\users\harris\documents\github\hw3ics167\project\server\pongserver\pongserver\ponglogic.h(130): warning C4244: '+=': conversion from 'double' to 'int', possible loss of data
+e:\users\harris\documents\github\hw3ics167\project\server\pongserver\pongserver\ponglogic.h(164): warning C4018: '<': signed/unsigned mismatch
+e:\users\harris\documents\github\hw3ics167\project\server\pongserver\pongserver\ponglogic.h(165): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+e:\users\harris\documents\github\hw3ics167\project\server\pongserver\pongserver\ponglogic.h(168): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+e:\users\harris\documents\github\hw3ics167\project\server\pongserver\pongserver\ponglogic.h(173): warning C4018: '<': signed/unsigned mismatch
+e:\users\harris\documents\github\hw3ics167\project\server\pongserver\pongserver\ponglogic.h(180): warning C4018: '<': signed/unsigned mismatch
+e:\users\harris\documents\github\hw3ics167\project\server\pongserver\pongserver\ponglogic.h(189): warning C4018: '<': signed/unsigned mismatch
+e:\users\harris\documents\github\hw3ics167\project\server\pongserver\pongserver\main.cpp(66): warning C4018: '<': signed/unsigned mismatch
+e:\users\harris\documents\github\hw3ics167\project\server\pongserver\pongserver\main.cpp(75): warning C4018: '<': signed/unsigned mismatch
+e:\users\harris\documents\github\hw3ics167\project\server\pongserver\pongserver\main.cpp(85): warning C4018: '<': signed/unsigned mismatch
+e:\users\harris\documents\github\hw3ics167\project\server\pongserver\pongserver\main.cpp(88): warning C4018: '<': signed/unsigned mismatch
+e:\users\harris\documents\github\hw3ics167\project\server\pongserver\pongserver\main.cpp(118): warning C4018: '<': signed/unsigned mismatch
+e:\users\harris\documents\github\hw3ics167\project\server\pongserver\pongserver\main.cpp(168): warning C4018: '<': signed/unsigned mismatch
+e:\users\harris\documents\github\hw3ics167\project\server\pongserver\pongserver\main.cpp(185): warning C4018: '<': signed/unsigned mismatch
+  PongServer.vcxproj -> E:\Users\Harris\Documents\GitHub\HW3ICS167\Project\server\PongServer\Debug\PongServer.exe

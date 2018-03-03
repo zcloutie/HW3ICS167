@@ -1,0 +1,6 @@
+Fixed latency was tested with inputs of 100 and 500. When testing with 100 lag was barely noticable and some clients worked perfectly fine with the 100 ms latency. At 500 all clients showed around 500 latency with an extra few milliseconds usually. 500ms would cause extreme lag and would jitter the ball physics a little bit but would still look as if moving fairly consistent
+
+Both random and incremental were done with a minimum bound of 250 and a max of 500. Incremental seemed to reach 500 around a few seconds. Random latency would bounce between 250 and 500. Random latency would cause massive bounces when rendering the ball as if the ball seemingly teleported. Incremental would continually jitter more but would still look fairly consistent.
+
+SEE ATTACHED PNG FILE FOR LINE GRAPH
+
