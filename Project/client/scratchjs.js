@@ -130,7 +130,7 @@ var Server;
 							//log("THIS IS NOT PROPER PROTOCOL/ ITS THE WELCOME HANDSHAKE");
 						}
 					}
-					send((new Date).getTime() + "|");
+					//send((new Date).getTime() + "|");
 				} catch(e){//log("ERROR");
 				}
 			});
@@ -292,20 +292,20 @@ window.addEventListener("keyup", function(event) {
   delete keysDown[event.keyCode];
   if (value == 37) { // Left arrow
   leftdown = false;
-  send((new Date).getTime() + '|LU');} 
+  send('LU');} 
   else if (value == 39) { // right arrow
       rightdown = false;
-	  send((new Date).getTime() + '|RU');}
+	  send('RU');}
 });
 
 Player.prototype.update = function() {
   for(var key in keysDown) {
     var value = Number(key);
     if(value == 37 && !leftdown) { // left arrow
-	  send((new Date).getTime() + '|LD');
+	  send('LD');
 	  leftdown = true;
     } else if (value == 39 && !rightdown) { // right arrow
-	  send((new Date).getTime() + '|RD');
+	  send('RD');
 	  rightdown = true;
     }
   }

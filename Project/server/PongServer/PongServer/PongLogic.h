@@ -169,7 +169,7 @@ public:
 	}
 
 	string buildGameStateMessage() {
-		string message = to_string(chrono::duration_cast<chrono::milliseconds>(chrono::system_clock::now().time_since_epoch()).count()) + "|";
+		string message = "|"; //message starts w/ message id calculated in main ending with a |
 		for (int i = 0; i < players.size(); i++) {
 			message += "p" + to_string(i+1) + "p:" + to_string(players[i].x) + "," + to_string(players[i].y) + "|s" + to_string(i+1) + ":" + to_string(players[i].score) + "|";
 		}
