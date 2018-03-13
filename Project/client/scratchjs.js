@@ -1,5 +1,8 @@
 var ID = prompt("Enter your name (Max 8 characters)", "New001").substr(0, 8);
 
+var outputSeqNum = 1;
+var LastInputSeqNum = 0;
+
 var FancyWebSocket = function(url)
 {
 	var callbacks = {};
@@ -78,7 +81,8 @@ var Server;
 			Server.bind('open', function() {
                 document.getElementById("cntBtn").disabled = true;
 				log( "Connected." );
-				send((new Date).getTime() + "|ID:" + ID);
+				send(outputSeqNum + "|ID:" + ID);
+				outputSeqNum++;
 			});
 
 			//OH NOES! Disconnection occurred.
@@ -92,8 +96,8 @@ var Server;
 				//log( payload );
 				try{
 					var split = payload.split("|");
-					var timestamp = split[0];
-					Ping = (new Date).getTime() - timestamp;
+					var msgID = split[0];
+					Ping = (new Date).getTime() - msgID;
 					document.getElementById('ping').innerHTML = "Ping: " + Ping;
 					for (i = 1; i < split.length; i++){
 						var split2 = split[i].split(":");
@@ -130,7 +134,7 @@ var Server;
 							//log("THIS IS NOT PROPER PROTOCOL/ ITS THE WELCOME HANDSHAKE");
 						}
 					}
-					//send((new Date).getTime() + "|");
+					send(-1 + "|AK:" + msgID); //sending back acknowledgement to the server
 				} catch(e){//log("ERROR");
 				}
 			});
@@ -292,20 +296,24 @@ window.addEventListener("keyup", function(event) {
   delete keysDown[event.keyCode];
   if (value == 37) { // Left arrow
   leftdown = false;
-  send('LU');} 
+  send(outputSeqNum + '|LU');
+  outputSeqNum++;} 
   else if (value == 39) { // right arrow
       rightdown = false;
-	  send('RU');}
+	  send(outputSeqNum + '|RU');
+	  outputSeqNum++;}
 });
 
 Player.prototype.update = function() {
   for(var key in keysDown) {
     var value = Number(key);
     if(value == 37 && !leftdown) { // left arrow
-	  send('LD');
+	  send(outputSeqNum + '|LD');
+	  outputSeqNum++;
 	  leftdown = true;
     } else if (value == 39 && !rightdown) { // right arrow
-	  send('RD');
+	  send(outputSeqNum + '|RD');
+	  outputSeqNum++;
 	  rightdown = true;
     }
   }

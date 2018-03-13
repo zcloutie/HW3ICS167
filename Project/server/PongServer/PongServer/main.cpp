@@ -15,6 +15,8 @@ webSocket server;
 vector<pair<int, pair<string, int>>> inQueue{};
 vector<pair<int, pair<string, int>>> outQueue{};
 
+vector<int> lastClientMessageIDs{ 0,0,0,0 };
+
 vector<pair<int, int>> pendingAcks{};
 
 int lastMessageID = 0;
@@ -22,7 +24,7 @@ int lastMessageID = 0;
 int latency = 0;
 long estimatedLatency = 0;
 
-vector<long long> estimatedLatencies{ 0,0,0,0 };
+vector<int> estimatedLatencies{ 0,0,0,0 };
 
 vector<int> latencies{0,0,0,0};
 
@@ -40,6 +42,18 @@ default_random_engine randEngine(device());
 uniform_int_distribution<int> uniDistribution;
 
 int interval_clocks = CLOCKS_PER_SEC * INTERVAL_MS / 1000;
+
+int findMaxLatency() {
+	int max = 0;
+
+	for (int i = 0; i < estimatedLatencies.size(); i++) {
+		if (estimatedLatencies[i] > max) {
+			max = estimatedLatencies[i];
+		}
+	}
+
+	return max;
+}
 
 void enqueInput(int clientID, string message, int expectedTime) {
 	inQueue.push_back(make_pair(expectedTime, make_pair(message, clientID)));
@@ -68,65 +82,97 @@ int produceNextLatency(int clientIndex) {
 
 void processInput(int currentTime) {
 	for (int i = 0; i < inQueue.size(); i++) {
+		
+		//int maxLatency = findMaxLatency();
+
+		vector<int> clientIDs = server.getClientIDs();
+
+		/*for (int j = 0; j < clientIDs.size(); j++) {
+			if (clientIDs[j] == inQueue[i].second.second) {
+				if (latencies[j] < maxLatency) {
+					inQueue[i].first += maxLatency - latencies[j];
+				}
+				break;
+			}
+		}*/
+
 		if (inQueue[i].first <= currentTime) {
 			pair<string, int> message = inQueue[i].second;
-
-			vector<int> clientIDs = server.getClientIDs();
 			/*
 			long long num = 0;
 			istringstream(message.first.substr(0, message.first.find("|"))) >> num;
 			long long currTime = chrono::duration_cast<chrono::milliseconds>(chrono::system_clock::now().time_since_epoch()).count();
-			for (int i = 0; i < clientIDs.size(); i++) {
-				if (clientIDs[i] == message.second) {
-					estimatedLatencies[i] = currTime - num;
+			for (int j = 0; j < clientIDs.size(); j++) {
+				if (clientIDs[j] == message.second) {
+					estimatedLatencies[j] = currTime - num;
 					break;
 				}
 			}*/
+			int num;
+			bool proceed = false;
+			istringstream(message.first.substr(0, message.first.find("|"))) >> num;
 			
-			if (message.first.substr(0, 3) == "ID") {
-				server.wssetClientCIDs(message.second, message.first.substr(3, message.first.size())); //client sent "ID:name"
-				string names = "";
-				for (int i = 0; i < clientIDs.size(); i++) {
-					names += "n" + to_string(i + 1) + ":" + server.getwsClientName(i) + "|";
-				}
-				for (int i = 0; i < clientIDs.size(); i++) {
-					server.wsSend(clientIDs[i], names);
-				}
-			}
-			else if (message.first.substr(0, 3) == "AK") {
-				int id;
-				istringstream(message.first.substr(3, message.first.size())) >> id;
-
-				for (int i = 0; i < pendingAcks.size(); i++) {
-					if (pendingAcks[i].first == id) {
-						for (int i = 0; i < clientIDs.size(); i++) {
-							if (clientIDs[i] == message.second) {
-								estimatedLatencies[i] = currentTime - pendingAcks[i].second;
-								break;
-							}
+			if (num > 0) {
+				for (int j = 0; j < clientIDs.size(); j++) {
+					if (clientIDs[j] == message.second) {
+						if (num - lastClientMessageIDs[j] <= 1) {
+							proceed = true;
+							lastClientMessageIDs[j] = num;
 						}
-						pendingAcks.erase(find(pendingAcks.begin(), pendingAcks.end(), pendingAcks[i]));
 						break;
 					}
 				}
 			}
-			else if (message.first.substr(0, 3) == "LD") { //When left button is pushed down
-				server.gameState.setClientLeft(message.second, true);
+			else {
+				proceed = true;
 			}
+			
+			if (proceed) {
+				if (message.first.substr(message.first.find("|") + 1, 3) == "ID") {
+					server.wssetClientCIDs(message.second, message.first.substr(message.first.find("|") + 4, message.first.size())); //client sent "ID:name"
+					string names = "";
+					for (int j = 0; j < clientIDs.size(); j++) {
+						names += "n" + to_string(j + 1) + ":" + server.getwsClientName(j) + "|";
+					}
+					for (int j = 0; j < clientIDs.size(); j++) {
+						server.wsSend(clientIDs[j], names);
+					}
+				}
+				else if (message.first.substr(message.first.find("|") + 1, 3) == "AK") {
+					int id;
+					istringstream(message.first.substr(message.first.find("|") + 4, message.first.size())) >> id; //client sent "AK:<messageID>"
 
-			else if (message.first.substr(0, 3) == "LU") { //When left button is released
-				server.gameState.setClientLeft(message.second, false);
+					for (int j = 0; j < pendingAcks.size(); j++) {
+						if (pendingAcks[i].first == id) {
+							for (int k = 0; k < clientIDs.size(); k++) {
+								if (clientIDs[k] == message.second) {
+									estimatedLatencies[k] = currentTime - pendingAcks[k].second;
+									break;
+								}
+							}
+							pendingAcks.erase(find(pendingAcks.begin(), pendingAcks.end(), pendingAcks[j]));
+							break;
+						}
+					}
+				}
+				else if (message.first.substr(message.first.find("|") + 1, 3) == "LD") { //When left button is pushed down
+					server.gameState.setClientLeft(message.second, true);
+				}
+
+				else if (message.first.substr(message.first.find("|") + 1, 3) == "LU") { //When left button is released
+					server.gameState.setClientLeft(message.second, false);
+				}
+
+				else if (message.first.substr(message.first.find("|") + 1, 3) == "RD") { //When right button is pushed down
+					server.gameState.setClientRight(message.second, true);
+				}
+
+				else if (message.first.substr(message.first.find("|") + 1, 3) == "RU") { //When left button is released
+					server.gameState.setClientRight(message.second, false);
+				}
+
+				inQueue.erase(find(inQueue.begin(), inQueue.end(), inQueue[i]));
 			}
-
-			else if (message.first.substr(0, 3) == "RD") { //When right button is pushed down
-				server.gameState.setClientRight(message.second, true);
-			}
-
-			else if (message.first.substr(0, 3) == "RU") { //When left button is released
-				server.gameState.setClientRight(message.second, false);
-			}
-
-			inQueue.erase(find(inQueue.begin(), inQueue.end(), inQueue[i]));
 		}
 	}
 }
@@ -189,6 +235,7 @@ void messageHandler(int clientID, string message){
 	for (int i = 0; i < clientIDs.size(); i++) {
 		if (clientIDs[i] == clientID) {
 			enqueInput(clientID, message, clock() + produceNextLatency(i));
+			break;
 		}
 	}
 }
@@ -205,7 +252,8 @@ void periodicHandler(){
 		vector<int> clientIDs = server.getClientIDs();
 		for (int i = 0; i < clientIDs.size(); i++) {
 			pendingAcks.push_back(make_pair(lastMessageID, newTime));
-			enqueOutput(clientIDs[i], to_string(lastMessageID++) + server.gameState.buildGameStateMessage(), newTime + produceNextLatency(i));
+			enqueOutput(clientIDs[i], to_string(lastMessageID) + server.gameState.buildGameStateMessage(), newTime + produceNextLatency(i));
+			lastMessageID++;
 			//cout << estimatedLatencies[i] << endl;
 		}
 
@@ -230,7 +278,10 @@ int main(int argc, char *argv[]){
 	switch (latencyType) {
 		case 1:
 			cout << "Please enter the amount of desired latency: ";
-			cin >> latencies[0], latencies[1], latencies[2], latencies[3];
+			cin >> latencies[0];
+			latencies[1] = latencies[0];
+			latencies[2] = latencies[0];
+			latencies[3] = latencies[0];
 			break;
 		case 2:
 			cout << "Please enter the minimum desired latency: ";
@@ -243,7 +294,11 @@ int main(int argc, char *argv[]){
 			break;
 		case 3:
 			cout << "Please enter the minimum desired latency: ";
-			cin >> minLatency, latencies[0], latencies[1], latencies[2], latencies[3];
+			cin >> minLatency;
+			latencies[0] = minLatency;
+			latencies[1] = minLatency;
+			latencies[2] = minLatency;
+			latencies[3] = minLatency;
 
 			cout << "Please enter the maximum desired latency: ";
 			cin >> maxLatency;
