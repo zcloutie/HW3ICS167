@@ -1,7 +1,7 @@
 var ID = prompt("Enter your name (Max 8 characters)", "New001").substr(0, 8);
 
 var outputSeqNum = 1;
-var LastInputSeqNum = -1;
+var LastInputSeqNum = 0;
 var messageQueue = [];
 
 var FancyWebSocket = function(url)
@@ -102,7 +102,7 @@ var Server;
 				
 				try{
 					var split = payload.split("|");
-					var msgID = split[0];
+					var msgID = Number(split[0]);
 					Ping = msgID;
 					if(msgID >= LastInputSeqNum) {
 						document.getElementById('ping').innerHTML = "Ping: " + Ping;
