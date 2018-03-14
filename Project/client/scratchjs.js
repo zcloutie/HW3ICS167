@@ -30,6 +30,7 @@ var FancyWebSocket = function(url)
 		// dispatch to the right handlers
 		this.conn.onmessage = function(evt){
 			dispatch('message', evt.data);
+			dispatch('process', null);
 		};
 
 		this.conn.onclose = function(){dispatch('close',null)}
@@ -95,10 +96,11 @@ var Server;
 			//Log any messages sent from server
 			Server.bind('message', function( payload ) {
 				//log( payload );
-				/*try{
+				try{
 					messageQueue.push(payload.split("|"));
 				} catch(e){//log("ERROR");
-				}*/
+				}
+				/*
 				try{
 					var split = payload.split("|");
 					var msgID = split[0];
@@ -141,7 +143,11 @@ var Server;
 					}
 					send(-1 + "|AK:" + msgID); //sending back acknowledgement to the server
 				} catch(e){//log("ERROR");
-				}
+				}*/
+			});
+			
+			Server.bind('process', function(){
+				processMessages();
 			});
 
 			Server.connect();
@@ -222,7 +228,7 @@ var processMessages = function() {
 				}
 				send(-1 + "|AK:" + msgID); //sending back acknowledgement to the server
 				LastInputSeqNum = msgID;
-				messageQueue.splice(j, 1);//remove the jth element, since we don't need to process it again.
+				messageQueue.splice(i, 1);//remove the ith element, since we don't need to process it again.
 			}
 		} catch(e){//log("ERROR");
 		}
@@ -391,7 +397,6 @@ Paddle.prototype.move = function(x, y) {
 }
 
 var update = function() {
-	//processMessages();
 	players[0].update();
 	//computer.update(ball);
 	//ball.update(player.paddle, computer.paddle);

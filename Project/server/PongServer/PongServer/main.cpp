@@ -148,7 +148,7 @@ void processInput(int currentTime) {
 						if (pendingAcks[j].first == id) {
 							for (int k = 0; k < clientIDs.size(); k++) {
 								if (clientIDs[k] == message.second) {
-									estimatedLatencies[k] = currentTime - pendingAcks[k].second;
+									estimatedLatencies[k] = currentTime - pendingAcks[j].second;
 									break;
 								}
 							}
