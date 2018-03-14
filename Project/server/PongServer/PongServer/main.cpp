@@ -1,4 +1,4 @@
-#include <stdlib.h>
+//#include <stdlib.h>
 #include <iostream>
 #include <string>
 #include <sstream>
@@ -20,6 +20,7 @@ vector<int> lastClientMessageIDs{ 0,0,0,0 };
 vector<pair<int, int>> pendingAcks{};
 
 int lastMessageID = 0;
+vector<int> lastMessageIDs{ 0,0,0,0, };
 
 int latency = 0;
 long estimatedLatency = 0;
@@ -128,22 +129,23 @@ void processInput(int currentTime) {
 			}
 			
 			if (proceed) {
-				if (message.first.substr(message.first.find("|") + 1, 3) == "ID") {
+				if (message.first.substr(message.first.find("|") + 1, 2) == "ID") {
 					server.wssetClientCIDs(message.second, message.first.substr(message.first.find("|") + 4, message.first.size())); //client sent "ID:name"
-					string names = "";
+					string names = "|";
 					for (int j = 0; j < clientIDs.size(); j++) {
 						names += "n" + to_string(j + 1) + ":" + server.getwsClientName(j) + "|";
 					}
 					for (int j = 0; j < clientIDs.size(); j++) {
-						server.wsSend(clientIDs[j], names);
+						server.wsSend(clientIDs[j], to_string(lastMessageIDs[j]) + names);
+						lastMessageIDs[j]++;
 					}
 				}
-				else if (message.first.substr(message.first.find("|") + 1, 3) == "AK") {
+				else if (message.first.substr(message.first.find("|") + 1, 2) == "AK") {
 					int id;
 					istringstream(message.first.substr(message.first.find("|") + 4, message.first.size())) >> id; //client sent "AK:<messageID>"
 
 					for (int j = 0; j < pendingAcks.size(); j++) {
-						if (pendingAcks[i].first == id) {
+						if (pendingAcks[j].first == id) {
 							for (int k = 0; k < clientIDs.size(); k++) {
 								if (clientIDs[k] == message.second) {
 									estimatedLatencies[k] = currentTime - pendingAcks[k].second;
@@ -251,9 +253,9 @@ void periodicHandler(){
 
 		vector<int> clientIDs = server.getClientIDs();
 		for (int i = 0; i < clientIDs.size(); i++) {
-			pendingAcks.push_back(make_pair(lastMessageID, newTime));
-			enqueOutput(clientIDs[i], to_string(lastMessageID) + server.gameState.buildGameStateMessage(), newTime + produceNextLatency(i));
-			lastMessageID++;
+			pendingAcks.push_back(make_pair(lastMessageIDs[i], newTime));
+			enqueOutput(clientIDs[i], to_string(lastMessageIDs[i]) + server.gameState.buildGameStateMessage(), newTime + produceNextLatency(i));
+			lastMessageIDs[i]++;
 			//cout << estimatedLatencies[i] << endl;
 		}
 

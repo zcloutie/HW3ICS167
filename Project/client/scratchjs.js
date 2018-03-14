@@ -95,24 +95,95 @@ var Server;
 			//Log any messages sent from server
 			Server.bind('message', function( payload ) {
 				//log( payload );
-				try{
+				/*try{
 					messageQueue.push(payload.split("|"));
+				} catch(e){//log("ERROR");
+				}*/
+				try{
+					var split = payload.split("|");
+					var msgID = split[0];
+					Ping = msgID;
+					document.getElementById('ping').innerHTML = "Ping: " + Ping;
+					for (j = 1; j < split.length; j++){
+						var split2 = split[j].split(":");
+						if (split2[0][0] == "p"){
+							var split3 = split2[1].split(",");
+							players[Number(split2[0][1])-1].paddle.x = Number(split3[0]);
+							players[Number(split2[0][1])-1].paddle.y = Number(split3[1]);
+						}
+						else if (split2[0][0] == "s"){
+							if (split2[0][1] == "1"){Score1 = Number(split2[1]);}
+							else if (split2[0][1] == "2"){Score2 = Number(split2[1]);}
+							else if (split2[0][1] == "3"){Score3 = Number(split2[1]);}
+							else if (split2[0][1] == "4"){Score4 = Number(split2[1]);}
+							else{log("This is wrong score int");}
+							document.getElementById('score').innerHTML = "Scores: " + Score1 + ", " + Score2 + ", " + Score3 + ", " + Score4;
+							
+						}
+						
+						else if (split2[0][0] == "n"){
+							if (split2[0][1] == "1"){Name1 = split2[1];}
+							else if (split2[0][1] == "2"){Name2 = split2[1];}
+							else if (split2[0][1] == "3"){Name3 = split2[1];}
+							else if (split2[0][1] == "4"){Name4 = split2[1];}
+							else{log("This is wrong name int");}
+							document.getElementById('names').innerHTML = "Names: " + Name1 + ", " + Name2 + ", " + Name3 + ", " + Name4;
+							
+						}
+						else if (split2[0] == "bp"){
+							var split3 = split2[1].split(",");
+							ball.x = Number(split3[0]);
+							ball.y = Number(split3[1]);
+						}
+						else{
+							//log("THIS IS NOT PROPER PROTOCOL/ ITS THE WELCOME HANDSHAKE");
+						}
+					}
+					send(-1 + "|AK:" + msgID); //sending back acknowledgement to the server
 				} catch(e){//log("ERROR");
 				}
 			});
 
 			Server.connect();
         }
-		
+	
 
 
-var processMessages() {
+
+var animate = window.requestAnimationFrame ||
+  window.webkitRequestAnimationFrame ||
+  window.mozRequestAnimationFrame ||
+  function(callback) { window.setTimeout(callback, 1000/60) };
+var canvas = document.createElement('canvas');
+var width = 600;
+var height = 600;
+var paddleWidth = 50;
+var paddleHeight = 10;
+canvas.width = width;
+canvas.height = height;
+var context = canvas.getContext('2d');
+window.onload = function() {
+  document.body.appendChild(canvas);
+  animate(step);
+};
+
+window.onclose = function(){
+	server.disconnect();
+}
+
+var step = function() {
+  update();
+  render();
+  animate(step);
+};
+
+var processMessages = function() {
 	for(i = 0; i < messageQueue.length; i++) {
 		try{
 			var split = messageQueue[i];
 			var msgID = split[0];
+			Ping = msgID;
 			if(msgID - LastInputSeqNum <= 1) {
-				Ping = "NOT CALCULATED";
 				document.getElementById('ping').innerHTML = "Ping: " + Ping;
 				for (j = 1; j < split.length; j++){
 					var split2 = split[j].split(":");
@@ -156,35 +227,6 @@ var processMessages() {
 		} catch(e){//log("ERROR");
 		}
 	}
-}	
-
-
-
-var animate = window.requestAnimationFrame ||
-  window.webkitRequestAnimationFrame ||
-  window.mozRequestAnimationFrame ||
-  function(callback) { window.setTimeout(callback, 1000/60) };
-var canvas = document.createElement('canvas');
-var width = 600;
-var height = 600;
-var paddleWidth = 50;
-var paddleHeight = 10;
-canvas.width = width;
-canvas.height = height;
-var context = canvas.getContext('2d');
-window.onload = function() {
-  document.body.appendChild(canvas);
-  animate(step);
-};
-
-window.onclose = function(){
-	server.disconnect();
-}
-
-var step = function() {
-  update();
-  render();
-  animate(step);
 };
 
 function Paddle(x, y, width, height) {
@@ -349,7 +391,7 @@ Paddle.prototype.move = function(x, y) {
 }
 
 var update = function() {
-	processMessages();
+	//processMessages();
 	players[0].update();
 	//computer.update(ball);
 	//ball.update(player.paddle, computer.paddle);

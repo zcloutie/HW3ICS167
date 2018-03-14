@@ -20,14 +20,14 @@ e:\users\harris\documents\github\hw3ics167\project\server\pongserver\pongserver\
 e:\users\harris\documents\github\hw3ics167\project\server\pongserver\pongserver\ponglogic.h(173): warning C4018: '<': signed/unsigned mismatch
 e:\users\harris\documents\github\hw3ics167\project\server\pongserver\pongserver\ponglogic.h(180): warning C4018: '<': signed/unsigned mismatch
 e:\users\harris\documents\github\hw3ics167\project\server\pongserver\pongserver\ponglogic.h(189): warning C4018: '<': signed/unsigned mismatch
-e:\users\harris\documents\github\hw3ics167\project\server\pongserver\pongserver\main.cpp(47): warning C4018: '<': signed/unsigned mismatch
-e:\users\harris\documents\github\hw3ics167\project\server\pongserver\pongserver\main.cpp(82): warning C4018: '<': signed/unsigned mismatch
-e:\users\harris\documents\github\hw3ics167\project\server\pongserver\pongserver\main.cpp(88): warning C4018: '<': signed/unsigned mismatch
-e:\users\harris\documents\github\hw3ics167\project\server\pongserver\pongserver\main.cpp(113): warning C4018: '<': signed/unsigned mismatch
-e:\users\harris\documents\github\hw3ics167\project\server\pongserver\pongserver\main.cpp(116): warning C4018: '<': signed/unsigned mismatch
-e:\users\harris\documents\github\hw3ics167\project\server\pongserver\pongserver\main.cpp(124): warning C4018: '<': signed/unsigned mismatch
-e:\users\harris\documents\github\hw3ics167\project\server\pongserver\pongserver\main.cpp(126): warning C4018: '<': signed/unsigned mismatch
-e:\users\harris\documents\github\hw3ics167\project\server\pongserver\pongserver\main.cpp(163): warning C4018: '<': signed/unsigned mismatch
-e:\users\harris\documents\github\hw3ics167\project\server\pongserver\pongserver\main.cpp(213): warning C4018: '<': signed/unsigned mismatch
-e:\users\harris\documents\github\hw3ics167\project\server\pongserver\pongserver\main.cpp(231): warning C4018: '<': signed/unsigned mismatch
+e:\users\harris\documents\github\hw3ics167\project\server\pongserver\pongserver\main.cpp(50): warning C4018: '<': signed/unsigned mismatch
+e:\users\harris\documents\github\hw3ics167\project\server\pongserver\pongserver\main.cpp(85): warning C4018: '<': signed/unsigned mismatch
+e:\users\harris\documents\github\hw3ics167\project\server\pongserver\pongserver\main.cpp(117): warning C4018: '<': signed/unsigned mismatch
+e:\users\harris\documents\github\hw3ics167\project\server\pongserver\pongserver\main.cpp(135): warning C4018: '<': signed/unsigned mismatch
+e:\users\harris\documents\github\hw3ics167\project\server\pongserver\pongserver\main.cpp(138): warning C4018: '<': signed/unsigned mismatch
+e:\users\harris\documents\github\hw3ics167\project\server\pongserver\pongserver\main.cpp(147): warning C4018: '<': signed/unsigned mismatch
+e:\users\harris\documents\github\hw3ics167\project\server\pongserver\pongserver\main.cpp(149): warning C4018: '<': signed/unsigned mismatch
+e:\users\harris\documents\github\hw3ics167\project\server\pongserver\pongserver\main.cpp(187): warning C4018: '<': signed/unsigned mismatch
+e:\users\harris\documents\github\hw3ics167\project\server\pongserver\pongserver\main.cpp(237): warning C4018: '<': signed/unsigned mismatch
+e:\users\harris\documents\github\hw3ics167\project\server\pongserver\pongserver\main.cpp(255): warning C4018: '<': signed/unsigned mismatch
   PongServer.vcxproj -> E:\Users\Harris\Documents\GitHub\HW3ICS167\Project\server\PongServer\Debug\PongServer.exe
