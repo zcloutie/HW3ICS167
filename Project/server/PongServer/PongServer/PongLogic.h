@@ -137,10 +137,10 @@ public:
 
 	int x;
 	int y;
-private:
-	const int radius = 5;
 	int xSpeed = 0;
 	int ySpeed = 3;
+private:
+	const int radius = 5;
 };
 
 class GameState {
@@ -173,7 +173,7 @@ public:
 		for (int i = 0; i < players.size(); i++) {
 			message += "p" + to_string(i+1) + "p:" + to_string(players[i].x) + "," + to_string(players[i].y) + "|s" + to_string(i+1) + ":" + to_string(players[i].score) + "|";
 		}
-		return message + "bp:" + to_string(ball.x) + "," +  to_string(ball.y); //format is p1p:585,21|s1:100|p2p:45,54|s2:1205 ... |pnp:455,34|sn:1020|bp:212,543
+		return message + "bp:" + to_string(ball.x) + "," +  to_string(ball.y) + "," + to_string(ball.xSpeed) + "," + to_string(ball.ySpeed); //format is p1p:585,21|s1:100|p2p:45,54|s2:1205 ... |pnp:455,34|sn:1020|bp:212,543,3,-3
 	}
 	
 	void setClientLeft(int clientID, bool isDown) {

@@ -95,15 +95,10 @@ var Server;
 			//Log any messages sent from server
 			Server.bind('message', function( payload ) {
 				//log( payload );
-				/*try{
-					messageQueue.push(payload.split("|"));
-				} catch(e){//log("ERROR");
-				}*/
-				
 				try{
 					var split = payload.split("|");
 					var msgID = Number(split[0]);
-					Ping = msgID;
+					Ping = "NOT CALCULATED";
 					if(msgID >= LastInputSeqNum) {
 						document.getElementById('ping').innerHTML = "Ping: " + Ping;
 						for (j = 1; j < split.length; j++){
@@ -136,6 +131,8 @@ var Server;
 								var split3 = split2[1].split(",");
 								ball.x = Number(split3[0]);
 								ball.y = Number(split3[1]);
+								ball.x_speed = Number(split3[2]);
+								ball.y_speed = Number(split3[3])
 							}
 							else{
 								//log("THIS IS NOT PROPER PROTOCOL/ ITS THE WELCOME HANDSHAKE");
@@ -147,10 +144,6 @@ var Server;
 				} catch(e){//log("ERROR");
 				}
 			});
-			
-			/*Server.bind('process', function(){
-				processMessages();
-			});*/
 
 			Server.connect();
         }
@@ -183,58 +176,6 @@ var step = function() {
   update();
   render();
   animate(step);
-};
-
-var processMessages = function() {
-	for(i = 0; i < messageQueue.length; i++) {
-		try{
-			var split = messageQueue[i];
-			var msgID = split[0];
-			Ping = msgID;
-			if(msgID - LastInputSeqNum <= 1) {
-				document.getElementById('ping').innerHTML = "Ping: " + Ping;
-				for (j = 1; j < split.length; j++){
-					var split2 = split[j].split(":");
-					if (split2[0][0] == "p"){
-						var split3 = split2[1].split(",");
-						players[Number(split2[0][1])-1].paddle.x = Number(split3[0]);
-						players[Number(split2[0][1])-1].paddle.y = Number(split3[1]);
-					}
-					else if (split2[0][0] == "s"){
-						if (split2[0][1] == "1"){Score1 = Number(split2[1]);}
-						else if (split2[0][1] == "2"){Score2 = Number(split2[1]);}
-						else if (split2[0][1] == "3"){Score3 = Number(split2[1]);}
-						else if (split2[0][1] == "4"){Score4 = Number(split2[1]);}
-						else{log("This is wrong score int");}
-						document.getElementById('score').innerHTML = "Scores: " + Score1 + ", " + Score2 + ", " + Score3 + ", " + Score4;
-						
-					}
-					
-					else if (split2[0][0] == "n"){
-						if (split2[0][1] == "1"){Name1 = split2[1];}
-						else if (split2[0][1] == "2"){Name2 = split2[1];}
-						else if (split2[0][1] == "3"){Name3 = split2[1];}
-						else if (split2[0][1] == "4"){Name4 = split2[1];}
-						else{log("This is wrong name int");}
-						document.getElementById('names').innerHTML = "Names: " + Name1 + ", " + Name2 + ", " + Name3 + ", " + Name4;
-						
-					}
-					else if (split2[0] == "bp"){
-						var split3 = split2[1].split(",");
-						ball.x = Number(split3[0]);
-						ball.y = Number(split3[1]);
-					}
-					else{
-						//log("THIS IS NOT PROPER PROTOCOL/ ITS THE WELCOME HANDSHAKE");
-					}
-				}
-				send(-1 + "|AK:" + msgID); //sending back acknowledgement to the server
-				LastInputSeqNum = msgID;
-				messageQueue.splice(i, 1);//remove the ith element, since we don't need to process it again.
-			}
-		} catch(e){//log("ERROR");
-		}
-	}
 };
 
 function Paddle(x, y, width, height) {
@@ -271,7 +212,7 @@ function Ball(x, y) {
   this.x = x;
   this.y = y;
   this.x_speed = 0;
-  this.y_speed = 3;
+  this.y_speed = 0;
   this.radius = 5;
 }
 
@@ -308,10 +249,10 @@ var render = function() {
   ball.render();
 };
 
-Ball.prototype.update = function(paddle1, paddle2) {
-  /*this.x += this.x_speed;
+Ball.prototype.update = function() {
+  this.x += this.x_speed;
   this.y += this.y_speed;
-  var top_x = this.x - this.radius;
+  /*var top_x = this.x - this.radius;
   var top_y = this.y - this.radius;
   var bottom_x = this.x + this.radius;
   var bottom_y = this.y + this.radius;
@@ -401,7 +342,7 @@ Paddle.prototype.move = function(x, y) {
 var update = function() {
 	players[0].update();
 	//computer.update(ball);
-	//ball.update(player.paddle, computer.paddle);
+	ball.update();
 };
 
 /*Computer.prototype.update = function(ball) {

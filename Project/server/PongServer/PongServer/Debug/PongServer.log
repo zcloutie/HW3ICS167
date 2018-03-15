@@ -30,4 +30,48 @@ e:\users\harris\documents\github\hw3ics167\project\server\pongserver\pongserver\
 e:\users\harris\documents\github\hw3ics167\project\server\pongserver\pongserver\main.cpp(187): warning C4018: '<': signed/unsigned mismatch
 e:\users\harris\documents\github\hw3ics167\project\server\pongserver\pongserver\main.cpp(237): warning C4018: '<': signed/unsigned mismatch
 e:\users\harris\documents\github\hw3ics167\project\server\pongserver\pongserver\main.cpp(255): warning C4018: '<': signed/unsigned mismatch
+  Generating Code...
+  Compiling...
+  websocket.cpp
+e:\users\harris\documents\github\hw3ics167\project\server\pongserver\pongserver\ponglogic.h(21): warning C4804: '-': unsafe use of type 'bool' in operation
+e:\users\harris\documents\github\hw3ics167\project\server\pongserver\pongserver\ponglogic.h(21): warning C4244: '+=': conversion from 'double' to 'int', possible loss of data
+e:\users\harris\documents\github\hw3ics167\project\server\pongserver\pongserver\ponglogic.h(32): warning C4804: '-': unsafe use of type 'bool' in operation
+e:\users\harris\documents\github\hw3ics167\project\server\pongserver\pongserver\ponglogic.h(32): warning C4244: '+=': conversion from 'double' to 'int', possible loss of data
+e:\users\harris\documents\github\hw3ics167\project\server\pongserver\pongserver\ponglogic.h(70): warning C4244: '+=': conversion from 'double' to 'int', possible loss of data
+e:\users\harris\documents\github\hw3ics167\project\server\pongserver\pongserver\ponglogic.h(71): warning C4244: '+=': conversion from 'double' to 'int', possible loss of data
+e:\users\harris\documents\github\hw3ics167\project\server\pongserver\pongserver\ponglogic.h(109): warning C4018: '<': signed/unsigned mismatch
+e:\users\harris\documents\github\hw3ics167\project\server\pongserver\pongserver\ponglogic.h(114): warning C4804: '-': unsafe use of type 'bool' in operation
+e:\users\harris\documents\github\hw3ics167\project\server\pongserver\pongserver\ponglogic.h(115): warning C4244: '+=': conversion from 'double' to 'int', possible loss of data
+e:\users\harris\documents\github\hw3ics167\project\server\pongserver\pongserver\ponglogic.h(119): warning C4804: '-': unsafe use of type 'bool' in operation
+e:\users\harris\documents\github\hw3ics167\project\server\pongserver\pongserver\ponglogic.h(120): warning C4244: '+=': conversion from 'double' to 'int', possible loss of data
+e:\users\harris\documents\github\hw3ics167\project\server\pongserver\pongserver\ponglogic.h(124): warning C4804: '-': unsafe use of type 'bool' in operation
+e:\users\harris\documents\github\hw3ics167\project\server\pongserver\pongserver\ponglogic.h(125): warning C4244: '+=': conversion from 'double' to 'int', possible loss of data
+e:\users\harris\documents\github\hw3ics167\project\server\pongserver\pongserver\ponglogic.h(129): warning C4804: '-': unsafe use of type 'bool' in operation
+e:\users\harris\documents\github\hw3ics167\project\server\pongserver\pongserver\ponglogic.h(130): warning C4244: '+=': conversion from 'double' to 'int', possible loss of data
+e:\users\harris\documents\github\hw3ics167\project\server\pongserver\pongserver\ponglogic.h(164): warning C4018: '<': signed/unsigned mismatch
+e:\users\harris\documents\github\hw3ics167\project\server\pongserver\pongserver\ponglogic.h(165): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+e:\users\harris\documents\github\hw3ics167\project\server\pongserver\pongserver\ponglogic.h(168): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+e:\users\harris\documents\github\hw3ics167\project\server\pongserver\pongserver\ponglogic.h(173): warning C4018: '<': signed/unsigned mismatch
+e:\users\harris\documents\github\hw3ics167\project\server\pongserver\pongserver\ponglogic.h(180): warning C4018: '<': signed/unsigned mismatch
+e:\users\harris\documents\github\hw3ics167\project\server\pongserver\pongserver\ponglogic.h(189): warning C4018: '<': signed/unsigned mismatch
+e:\users\harris\documents\github\hw3ics167\project\server\pongserver\pongserver\websocket.cpp(90): warning C4477: 'printf' : format string '%s' requires an argument of type 'char *', but variadic argument 1 has type 'LPVOID'
+e:\users\harris\documents\github\hw3ics167\project\server\pongserver\pongserver\websocket.cpp(116): warning C4018: '<': signed/unsigned mismatch
+e:\users\harris\documents\github\hw3ics167\project\server\pongserver\pongserver\websocket.cpp(143): warning C4018: '<': signed/unsigned mismatch
+e:\users\harris\documents\github\hw3ics167\project\server\pongserver\pongserver\websocket.cpp(165): warning C4018: '>=': signed/unsigned mismatch
+e:\users\harris\documents\github\hw3ics167\project\server\pongserver\pongserver\websocket.cpp(178): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+e:\users\harris\documents\github\hw3ics167\project\server\pongserver\pongserver\websocket.cpp(202): warning C4267: '=': conversion from 'size_t' to 'char', possible loss of data
+e:\users\harris\documents\github\hw3ics167\project\server\pongserver\pongserver\websocket.cpp(211): warning C4267: '=': conversion from 'size_t' to 'char', possible loss of data
+e:\users\harris\documents\github\hw3ics167\project\server\pongserver\pongserver\websocket.cpp(212): warning C4267: '=': conversion from 'size_t' to 'char', possible loss of data
+e:\users\harris\documents\github\hw3ics167\project\server\pongserver\pongserver\websocket.cpp(226): warning C4267: '=': conversion from 'size_t' to 'char', possible loss of data
+e:\users\harris\documents\github\hw3ics167\project\server\pongserver\pongserver\websocket.cpp(227): warning C4267: '=': conversion from 'size_t' to 'char', possible loss of data
+e:\users\harris\documents\github\hw3ics167\project\server\pongserver\pongserver\websocket.cpp(228): warning C4267: '=': conversion from 'size_t' to 'char', possible loss of data
+e:\users\harris\documents\github\hw3ics167\project\server\pongserver\pongserver\websocket.cpp(420): warning C4018: '<': signed/unsigned mismatch
+e:\users\harris\documents\github\hw3ics167\project\server\pongserver\pongserver\websocket.cpp(619): warning C4018: '>=': signed/unsigned mismatch
+e:\users\harris\documents\github\hw3ics167\project\server\pongserver\pongserver\websocket.cpp(646): warning C4018: '<': signed/unsigned mismatch
+e:\users\harris\documents\github\hw3ics167\project\server\pongserver\pongserver\websocket.cpp(660): warning C4018: '>=': signed/unsigned mismatch
+e:\users\harris\documents\github\hw3ics167\project\server\pongserver\pongserver\websocket.cpp(744): warning C4473: 'printf' : not enough arguments passed for format string
+  e:\users\harris\documents\github\hw3ics167\project\server\pongserver\pongserver\websocket.cpp(744): note: placeholders and their parameters expect 2 variadic arguments, but 1 were provided
+  e:\users\harris\documents\github\hw3ics167\project\server\pongserver\pongserver\websocket.cpp(744): note: the missing variadic argument 2 is required by format string '%d'
+e:\users\harris\documents\github\hw3ics167\project\server\pongserver\pongserver\websocket.cpp(781): warning C4018: '<': signed/unsigned mismatch
+  Generating Code...
   PongServer.vcxproj -> E:\Users\Harris\Documents\GitHub\HW3ICS167\Project\server\PongServer\Debug\PongServer.exe
