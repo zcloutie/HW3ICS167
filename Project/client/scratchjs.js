@@ -107,6 +107,8 @@ var Server;
 								var split3 = split2[1].split(",");
 								players[Number(split2[0][1])-1].paddle.x = Number(split3[0]);
 								players[Number(split2[0][1])-1].paddle.y = Number(split3[1]);
+								players[Number(split2[0][1])-1].paddle.x_speed = Number(split3[2]);
+								players[Number(split2[0][1])-1].paddle.y_speed = Number(split3[3]);
 							}
 							else if (split2[0][0] == "s"){
 								if (split2[0][1] == "1"){Score1 = Number(split2[1]);}
@@ -326,7 +328,7 @@ Player.prototype.update = function() {
 };
 
 Paddle.prototype.move = function(x, y) {
-  this.x += x;
+  /*this.x += x;
   this.y += y;
   this.x_speed = x;
   this.y_speed = y;
@@ -336,11 +338,16 @@ Paddle.prototype.move = function(x, y) {
   } else if (this.x + this.width > width) { // all the way to the right
     this.x = width - this.width;
     this.x_speed = 0;
-  }
+  }*/
+  this.x += this.x_speed;
+  this.y += this.y_speed;
 }
 
 var update = function() {
 	players[0].update();
+	for(i = 0; i< players.length; i++) {
+		players[i].paddle.move(0,0);
+	}
 	//computer.update(ball);
 	ball.update();
 };

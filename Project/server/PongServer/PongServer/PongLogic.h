@@ -171,9 +171,9 @@ public:
 	string buildGameStateMessage() {
 		string message = "|"; //message starts w/ message id calculated in main ending with a |
 		for (int i = 0; i < players.size(); i++) {
-			message += "p" + to_string(i+1) + "p:" + to_string(players[i].x) + "," + to_string(players[i].y) + "|s" + to_string(i+1) + ":" + to_string(players[i].score) + "|";
+			message += "p" + to_string(i+1) + "p:" + to_string(players[i].x) + "," + to_string(players[i].y) + "," + to_string(players[i].playerNum <= 2 && players[i].x + players[i].width < ARENA_WIDTH  && players[i].x > 0 ? players[i].speed * ((players[i].left ? -players[i].left : true)*(players[i].right ^ players[i].left)) : 0) + "," + to_string(players[i].playerNum > 2 && players[i].y + players[i].height < ARENA_HEIGHT && players[i].y > 0 ? players[i].speed * ((players[i].left ? -players[i].left : true)*(players[i].right ^ players[i].left)) : 0) + "|s" + to_string(i+1) + ":" + to_string(players[i].score) + "|";
 		}
-		return message + "bp:" + to_string(ball.x) + "," +  to_string(ball.y) + "," + to_string(ball.xSpeed) + "," + to_string(ball.ySpeed); //format is p1p:585,21|s1:100|p2p:45,54|s2:1205 ... |pnp:455,34|sn:1020|bp:212,543,3,-3
+		return message + "bp:" + to_string(ball.x) + "," +  to_string(ball.y) + "," + to_string(ball.xSpeed) + "," + to_string(ball.ySpeed); //format is p1p:585,21,4,0|s1:100|p2p:45,54,-4,0|s2:1205 ... |pnp:455,34,0,4|sn:1020|bp:212,543,3,-3
 	}
 	
 	void setClientLeft(int clientID, bool isDown) {
